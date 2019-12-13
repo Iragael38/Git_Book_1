@@ -8,6 +8,7 @@ bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 description: "This is a test for **Statistics* class in Grenoble. The output format for this example is bookdown::gitbook."
+download: ["pdf", "epub"]
 ---
 
 # Prerequisites
