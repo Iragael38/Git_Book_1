@@ -1,0 +1,76 @@
+## Les packages
+\textbf{Installation de packages}
+
+`R` a une configuration de base, qui peut être complétée par de nombreux packages ajoutant différentes fonctions. 
+
+Les packages doivent être installés une première fois sur le pc avant de pouvoir être utilisés. `install.packages("pack")` téléchargera est installera le package [^1].
+
+[^1]: voir le fichier  `install.packages.R` qui regroupe les packages utilisés pour ce cours et ceux conseillés.
+
+\textbf{Chargement de packages}
+
+Les packages installés sur une machine ne sont pas chargés en mémoire au démarrage. On charge les packages requis dans l'environnement *R* par `library()` ou  `require()`
+
+Les fonctions et les données contenus dans le package sont alors accessibles.
+
+\textbf{Updating de R et ses packages}
+
+Le package `installr`propose la fonction  `updateR()`, qui met automatiquement à jour la version de *R* et les packages.
+
+
+## Working directory: dossier de travail
+
+Sans précision particulière, les fichiers seront chargés et sauvegardés dans le `working directory` (wd): le dossier dans lequel *R* va stocker et rechercher les fichiers. Les fonctions `getwd()` et  `setwd()` permettent respectivement de voir le dossier de travail actuel et de le modifier.
+
+\textbf{Chemin d'accès sous *R*:}
+*R* utilise un autre type d'écriture de chemin d'accès que celui de Windows (`"C:\Dossier\sous-dossier"`). Sous *R*, il faut utiliser `"C:/Dossier/sous-dossier"` ou "`C:\\Dossier\\sous-dossier"`. Et sous Mac : `"/Users/Moi/Dossier/"`
+
+## Codage R:
+\textbf{Commandes et scripts}
+Le code *R* peut être saisi directement dans la console ligne à ligne ou être sauvé comme un script: une succession de lignes de code. Un script peut être sauvegardé dans un fichier d'extension `.R`. Un script peut être exécuté de plusieurs façons:  
+
+- en gardant le curseur sur la ligne à exécuter et en cliquant sur le bouton `run` (ou avec le raccourcis clavier `CTRL+ENTREE`). Après éxecution, le curseur passe à la ligne suivante.  
+- en sélectionnant la ou les lignes à exécuter et en cliquant sur `run` (ou  `CTRL+ENTREE`)  
+- par la fonction `source("monscript.R")`.
+
+Les commandes dans le script sont séparées soit par `;` soit par un retour à la ligne
+
+**R is case sensitive.** Majuscules et minuscules sont prises en compte dans les noms de fonctions, d'objets, etc.
+
+Le caratère `#` précède des éléments de commentaires et ne sont pas exécutés. 
+
+Certaines commandes s'étendent sur plusieurs lignes. On utilise `+` à la fin d'une ligne pour une commande multilignes.
+
+\textbf{Programme R: Objets}
+
+R stocke les données et les résultats dans des objets. On assigne et on stocke dans des objets avec l'opérateur `<-`.
+
+Pour afficher le contenu d'un objet, il suffit d'exécuter son nom.
+
+Pour afficher tous les objets de l'environnement (ou la mémoire de R) : `ls()`
+
+Par exemple:
+
+```{r}
+# stocke 3 dans l'objet abc
+abc <- 3
+# affiche le contenu de abc
+abc
+# affiche le contenu de l'environnement
+ls()
+```
+
+\textbf{Programme R: Fonctions}
+
+Les fonctions sont essentielles pour le travail des données sous *R*. 
+
+Comme pour les fonctions mathématiques, les fonction R réalisent des opérations sur un *input* et renvoient un *output*.
+Par exemple, la fonction `mean(x)` prend le vecteur de nombres `x` et renvoie leur moyenne.
+Les inputs sont souvent appelés des arguments de la fonction.
+
+\textbf{Programme R: Aide de R}
+
+L'aide et la documentation des fonctions et des objets de *R* sont accessibles par `?` 
+
+Par exemple `?mean`
+

@@ -1,0 +1,18 @@
+
+
+# Premières opérations sous R {.tabset .tabset-fade .tabset-pills}
+```{r child='021_DebutR_IMT18.Rmd'}
+```
+
+# Manipulation des objets sous R {.tabset}
+```{r child='022_datastructure_IMT18.Rmd'}
+```
+
+# Chargement de données sous R {.tabset}
+```{r child='023_loading_IMT18.Rmd'}
+```
+
+
+Recommendations de lecture:  
+- https://stats.idre.ucla.edu/stat/data/intro_r/intro_r_flat.html
+

@@ -1,0 +1,267 @@
+## Structures de données
+Plusieurs types d'objets de *R* peuvent contenir des données.
+
+## Les Vecteurs
+Les vecteurs sont unidimentionnels et homogènes.
+Une variable seule peut être représentée par un vecteur de l'un des types suivants:  
+- `logical`: la variable prend les valeurs  `TRUE` ou `FALSE` (1 ou 0)  
+- `integer`: un entier uniquement (représenté par un nombre suivi de `L`)  
+- `numeric` ou `double`: un nombre réel  
+- `character`: une chaine de caractères (du texte)
+
+Une valeur seule est un vecteur de longueur 1.
+
+`c()` est la fonction de concaténation. elle combine les valeurs de différents type en un vecteur.  
+`typeof()` identifie le type du vecteur. `length()` renvoie la longueur du vecteur.
+
+Exemple:
+```{r}
+mon_vec <- c(1, 3, 5)
+mon_vec
+typeof(mon_vec)
+char_vec <- c("these", "are", "some", "words")
+length(char_vec)
+```
+
+**Répétition et séquence**  
+`rep()` créé un vecteur en répétant les élements:  
+`seq()` créé un vecteur en faisant une séquence d'éléments.  
+L'expression `m:n` génère une séquence d'entiers de `m`à `n`  
+Par exemple:
+```{r}
+# répéter 3 fois 0
+rep(0, times=3)
+# répéter 4 fois "abc"
+rep("abc", 4)
+# Séquence de 1 à 5 avec un pas de 2
+seq(from=1, to=5, by=2)
+# Séquence de 10 à 0 avec un pas de -5
+seq(10, 0, -5)
+# Séquence d'entiers de 3 à 7
+3:7
+# Répétition de séquence:
+rep(seq(1,3,1), times=2)
+# Séquence de répétition
+rep(seq(1,3,1), each=2)
+```
+
+## Recyclage vectoriel
+
+Lorsque des opérations sont réalisées sur deux vecteurs ou plus, dont les dimensions sont inégales, les valeurs du vecteur le plus court seront *'recyclées'*  pour compléter le vecteur jusqu'à obtenir la même dimension que le vecteur le plus long.
+
+Dans l'exemple ci-dessous, le vecteur `c(1)` de taille 1 est recyclé pour devenir `c(1,1,1)`
+
+```{r}
+c(1,2,3) + 1
+```
+Ici, le vecteur `c(1,2)` est recyclé deux fois pour devenir `c(1,2,1,2,1,2)`
+```{r}
+c(1,2,3,4,5,6) + c(1,2)
+```
+`c(2)` devient `c(2,2,2)`
+```{r}
+c(1,2,3) < 2
+```
+Si le recyclage est partiel, on a le message
+```{r} 
+c(2,3,4) + c(10, 20)
+```
+
+## Sélectionner des sous-ensembles de vecteur avec `[]`
+
+Les éléments composant un vecteur peuvent être sélectionnés en spécifiant sa position dans le vecteur entre `[]`
+
+```{r} 
+# créer un vecteur de 10 à 1
+a <- seq(10,1,-1) ; a
+``` 
+Par exemple : Sélectionner le 2ème élément
+```{r} 
+a[2]
+```
+Sélectionner les 5 premiers éléments
+```{r} 
+a[seq(1,5)]
+```
+Sélection des premier, troisième et quatrième éléments:
+```{r}
+a[c(1,3,4)]
+```
+
+Les éléments peuvent être nommés, et appelés par leur nom.
+
+```{r}
+scores <- c(John=25, Marge=34, Dan=24, Emily=29)
+scores[c("John", "Emily")]
+```
+
+## Sélection conditionnelle - sous ensemble conditionné
+
+Le *subsetting* logique peut être fait avec un vecteur `(TRUE/FALSE)`
+```{r}
+scores[c(FALSE, TRUE, TRUE, FALSE)]
+```
+
+Il peut aussi être fait avec une condition
+  
+```{r}
+scores[scores<30]
+```
+
+## Listes
+
+Les listes sont des éléments uni-dimensionnels, mais dont les éléments peuvent être de types différents : des vecteurs (de toute dimension), des listes, des matrices, des dataframes.
+
+\textbf{Génération de liste par `list()`}
+Une liste composée d'un vecteur, d'un vecteur d'entiers et un vecteur de caractères.
+
+```{r}
+mylist <- list(1.1, c(1L,3L,7L), c("abc", "def"))
+mylist
+```
+
+Les éléments peuvent être nommés
+
+```{r}
+mary_info <- list(classes=c("Biology", "Math", "Music",
+                            "Physics"),
+                  friends=c("John", "Dan", "Emily"),
+                  SAT=1450)
+mary_info
+```
+
+\textbf{Accès aux éléments de listes}
+
+Comme précédemment, l'accès aux composants d'une liste se fait soit par `[[]]` pour accèder avec la position, soit avec `$` pour accèder avec le nom.
+
+Par la position
+```{r}
+mary_info[[2]]
+```
+Par le nom
+```{r}
+mary_info$SAT
+```
+Le second élément du vecteur `friend`
+```{r}
+mary_info$friends[2]
+```
+
+## Matrices
+Les matrices sont des structures de données à deux dimensions et homogènes.
+
+\textbf{Créer une matrice `matrix()`}
+
+L'input de `matrix()` est un vecteur qui est transformé en une matrice en 2 dimensions, selon les spécifications `nrow` et `ncol`.
+
+Par défaut, la matrice est remplie colonne par colonne, cela est modifié par  `byrow=T` 
+
+Par exemple: une matrice 2lx3c, remplie par colonne:
+```{r} 
+# on remplit les colonnes avec le vecteur de 1 à 6 sur 2 lignes
+a <- matrix(1:6, nrow=2)
+a
+```
+Remplissage par ligne
+```{r}
+b <- matrix(5:14, nrow=2, byrow=TRUE)
+b
+```
+ 
+\textbf{Accès aux éléments d'une matrice - `[row,column]`}
+
+L'omission de `row` correspond à la sélection de toutes les lignes. L'omission de `column` sélectionne toutes les colonnes.
+
+Sélection de la ligne 2, colonne 3
+```{r}
+a[2,3]
+```
+Toutes les lignes de la colonne 2
+```{r}
+b[,2]
+```
+Toutes les colonnes de la ligne 1
+```{r}
+a[1,]
+```
+
+## Dataframe
+
+Les données de l'analyse statistique sont typiquement stockées dans des  `dataframe`.
+
+Elles combinent les possibilités des matrices et des listes.
+
+Comme pour les matrices, les `dataframe` sont rectangulaires, les colonnes sont les variables et les lignes sont les observations de ces variables.
+Comme les listes, les `dataframe` peuvent avoir des éléments (les colonnes) de différents types (numérique, caractère, facteurs, logique,etc.) 
+
+Mais les éléments d'un `dataframe` doivent être de longueur égale.
+
+\textbf{Créer un dataframe avec `data.frame()`}
+
+La syntaxe est la même que pour `list()`, mais les éléments doivent être de même longueur.
+Les éléments peuvent être nommés.
+
+Par exemple, un vecteur logique et un vecteur numérique
+
+```{r}
+mydata <- data.frame(diabetic = c(TRUE, FALSE, TRUE, FALSE), 
+                     height = c(65, 69, 71, 73))
+mydata
+```
+
+\textbf{Sous ensemble de dataframes}
+
+Comme pour les matrices et les listes, les sélections sont faites avec`[rows, columns]` ou avec le nom de la variable.
+
+Par exemple
+```{r} 
+mydata[3,2]
+```
+Ou 
+```{r}
+mydata[1:2, "height"]
+```
+Ou 
+```{r}
+mydata[,"diabetic"]
+```
+
+\textbf{Accéder aux variables ou colonnes par le nom ou `$`}
+Par exemple
+```{r}
+mydata$height[2:3]
+mydata[["height"]]
+mydata[["height"]][2]
+```
+
+\textbf{Nommer les variables d'un dataframe}
+
+`colnames(data_frame)` renvoie les noms des colonnes d'une dataframe (ou d'une matrice).  
+`colnames(data_frame) <- c("some", "names")` assigne des noms aux colonnes.  
+Par exemple
+```{r}
+colnames(mydata)
+colnames(mydata) <- c("Diabetic", "Height")
+colnames(mydata)
+```
+Pour changer le nom d'une variable:
+```{r}
+colnames(mydata)[1] <- "Diabetes"
+colnames(mydata)
+```
+Enfin on peut *"copier/coller"* une variable sous condition :
+
+`dat[dat$Subject=='s2',]$RT <- dat[dat$Subject=='s2',]$Trial`
+
+\textbf{Examiner la structure d'un objet}
+
+Pour les objets à 2 dimensions `dim()` renvoie le nombre de lignes et de colonnes.
+
+On utilise  `str()` pour connaître la structure d'un objet et le type de ses éléments.
+
+```{r}
+dim(mydata)
+
+str(mydata)
+```
+

@@ -1,0 +1,78 @@
+## Manipulation de données
+
+\textbf{Chargement de données sous R}
+
+Débutant avec *R*, il peut sembler efficace de manipuler les données avec un logiciel familier tel que  *MS Excel*, pour corriger les erreurs, ajouter quelques informations ou faire quelques calculs simples.
+
+Pourtant, le travail sous *R* est encouragé ici, pour 100% des opérations sur les données !
+
+Quelques arguments:  
+
+- *MS Excel* charge les données réelles, ce qui signifie que les modifications sont sauvegardées dans le fichier de données même. De plus, aucun historique des manipulations n'est sauvegardé, il est donc difficile, voire impossible, de conserver une trace des changements. *Au contraire, R*, charge une copie des données dans sa mémoire et n'altère pas directement les données. Il permet de fonctionner avec des scripts, qui listent les manipulations appliquées aux données, les rendant ainsi **reproductibles** et **transparentes**.  
+- Travailler directement sur les données peut produire des erreurs qui sont alors difficiles à identifier et à corriger.  Avec *R* il est facile de détecter les erreurs et problèmes systématiques à partir de petits programmes.  
+- Différents formats de données peuvent être chargés avec *R*, notamment les formats de logiciels spécialisés tels que SAS, Spss, Stata, etc.
+
+\textbf{Formats de données - exemples}
+
+**Dataframe**
+Une base de données sous *R* est appelée une `dataframe`, équivalent à une matrice de données où les lignes sont indéxées par leur numéro et les colonnes par des noms de variables.
+Les bases de données d'autres formats (par ex. ceux d'autres logiciels) peuvent être importées (ou chargées) sous *R*.
+
+**Formats de données R**  
+Les fichiers `.Rdata` ou `.rda ` contiennent un ou plusieurs objets `R` (dataframes, fonctions, shapefiles, etc.)
+
+```{r }
+# Chargement d'un fichier (fictif) de données dans R: 
+load('DATA\\Movie.Data.Clean.RData')
+# utiliser ls() pour lister les objets de l'environnement
+ls()
+```
+
+Les fichiers `.rds` contiennent un objet *R* sans nom. Cet objet est donc stocké dans une seule variable. `readRDS('file.rds')` permet de charger un tel fichier et `str(newdat)`de savoir quels objets sont dans l'objet chargé.
+
+**Les fichers texte**
+
+Les fichiers `.txt`ou `.csv` sont des fichiers de données brutes, sans mise en forme des données (par exemple format de date). 
+
+Dans un fichier texte, une ligne correspond à une observation (une ligne du dataframe). Sur la ligne, les valeurs des différentes colonnes sont séparées par un caractère séparateur (souvent le `;` ou la tabulation).
+
+`read.table('file.txt', header=TRUE)` permet de charger un fichier texte où la 1ère ligne contient les noms de variables.
+
+*Problèmes classiques de lecture des fichiers textes*
+
+1. *R* ne trouve pas le fichier que vous voulez charger:
+  - Vérifiez votre working directory (dossier de travail) `getwd()`. Ce dossier contient-il le fichier que vous voulez charger ?  Modifiez ce dossier avec `setwd()`.  
+  - Parfois il est utile de préciser tout le chemin d'accès dans le nom du fichier à charger. Par exemple: `"C://Documents//data.txt"` sous Windows ou sous Mac  `"/Users/Moi/Documents/data.txt"`.
+
+2. `Incorrect delimiter`. Aucun message d'erreur n'est affiché, mais les données paraissent étranges. Le séparateur de variable est mal spécifié. Excel utilise souvent la `,` alors que d'autres logiciels utilisent l'espace ou la tabulation.
+`dat <- read.table("file.csv", header=TRUE, sep=',')`permet de préciser le séparateur.
+
+3. *Décimale*. Les données issues de locigiels anglosaxons utilisent le `.` pour indiquer les décimales, plutôt que la `,`. Cela peut être précisé avec: `dat <- read.table("file.csv", header=TRUE, sep=',', dec='.')`
+
+Cependant,  le `.` est aussi parfois utilisé pour séparer les milliers. C'est alors à l'exportation des données que l'on doit s'assurer du caractère des décimales et qu'il n'y a pas de caractère pour les milliers.
+
+4. *Erreurs sur les variables*. Dans certains cas, le problème d'importation affecte une ou plusieurs variables.
+  - Une chaine de caractère est reconnue comme un facteur : `as.character(data$V1)` pour convertir une variable en caractère.
+  - Dans un champs de caractère, le `.` est utilisé pour les milliers, alors que la `,`marque les décimales. `gsub("\\.", "", data$V1)`supprime les `.` dans le champs de valeurs.
+  - La `,`marque les décimales au lieu du `.`: `gsub("\\,", "\\.", data$V1)` : remplace les `,` par un `.`
+  - pour convertir une chaine de caractères en numérique: `as.numeric(data$V1)` 
+
+Par exemple:
+
+```{r, eval=FALSE}
+data <- read.table("file.txt", header=TRUE, stringsAsFactors=FALSE)
+data$V1 <- as.numeric(gsub("\\,", "\\.", gsub("\\.", "", data$V1)))
+```
+
+5. les valeurs manquantes sont indiquées par `.`au lieu d'un vide: `NA`:  
+`read.table("file.txt", header=TRUE, na.strings='.')` précise le codage des vides. Si deux codages existent dans le fichier des `.` et les caractères *NA* :
+`read.table("file.txt", header=TRUE, na.strings=c('.', NA))` 
+
+6. *Nom de colonne manquant*:  
+R considère qu'une colonne sans nom contient les noms de lignes.`read.table("file.csv", header=TRUE, row.names=NULL)` force la colonne sans nom à être prise comme une variable.
+
+7. *Lignes de longueur différente*:  
+Si des lignes ont des longueurs différentes, *R* ne retrouve pas toutes les variables. Il faut le forcer par :`read.table("file.csv", header=TRUE, fill=TRUE)`
+
+8. *drop des premières lignes*:  
+On peut commencer la lecture du fichier au numéro de ligne souhaité: `read.table("file.csv", header=TRUE, skip=4)`: pour commencer à la ligne 5.
