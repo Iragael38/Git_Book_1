@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>References | A Book for Statistics</title>
+  <title>Chapter 3 Premières opérations sous R | A Book for Statistics</title>
   <meta name="description" content="This is a test for **Statistics* class in Grenoble. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.10 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="References | A Book for Statistics" />
+  <meta property="og:title" content="Chapter 3 Premières opérations sous R | A Book for Statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | A Book for Statistics" />
+  <meta name="twitter:title" content="Chapter 3 Premières opérations sous R | A Book for Statistics" />
   
   <meta name="twitter:description" content="This is a test for **Statistics* class in Grenoble. The output format for this example is bookdown::gitbook." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="final-words.html">
-
+<link rel="prev" href="Preface.html">
+<link rel="next" href="manipulation-des-objets-sous-r.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -195,24 +195,76 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
-
+<div id="premieres-operations-sous-r" class="section level1 tabset tabset-fade tabset-pills">
+<h1><span class="header-section-number">Chapter 3</span> Premières opérations sous R</h1>
+<div id="les-packages" class="section level2">
+<h2><span class="header-section-number">3.1</span> Les packages</h2>
+<p></p>
+<p><code>R</code> a une configuration de base, qui peut être complétée par de nombreux packages ajoutant différentes fonctions.</p>
+<p>Les packages doivent être installés une première fois sur le pc avant de pouvoir être utilisés. <code>install.packages("pack")</code> téléchargera est installera le package.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p></p>
+<p>Les packages installés sur une machine ne sont pas chargés en mémoire au démarrage. On charge les packages requis dans l’environnement <em>R</em> par <code>library()</code> ou <code>require()</code></p>
+<p>Les fonctions et les données contenus dans le package sont alors accessibles.</p>
+<p></p>
+<p>Le package <code>installr</code>propose la fonction <code>updateR()</code>, qui met automatiquement à jour la version de <em>R</em> et les packages.</p>
 </div>
-
-
-
-
-
-
-
+<div id="working-directory-dossier-de-travail" class="section level2">
+<h2><span class="header-section-number">3.2</span> Working directory: dossier de travail</h2>
+<p>Sans précision particulière, les fichiers seront chargés et sauvegardés dans le <code>working directory</code> (wd): le dossier dans lequel <em>R</em> va stocker et rechercher les fichiers. Les fonctions <code>getwd()</code> et <code>setwd()</code> permettent respectivement de voir le dossier de travail actuel et de le modifier.</p>
+<p>
+<em>R</em> utilise un autre type d’écriture de chemin d’accès que celui de Windows (<code>"C:\Dossier\sous-dossier"</code>). Sous <em>R</em>, il faut utiliser <code>"C:/Dossier/sous-dossier"</code> ou "<code>C:\\Dossier\\sous-dossier"</code>. Et sous Mac : <code>"/Users/Moi/Dossier/"</code></p>
+</div>
+<div id="codage-r" class="section level2">
+<h2><span class="header-section-number">3.3</span> Codage R:</h2>
+<p>
+Le code <em>R</em> peut être saisi directement dans la console ligne à ligne ou être sauvé comme un script: une succession de lignes de code. Un script peut être sauvegardé dans un fichier d’extension <code>.R</code>. Un script peut être exécuté de plusieurs façons:</p>
+<ul>
+<li>en gardant le curseur sur la ligne à exécuter et en cliquant sur le bouton <code>run</code> (ou avec le raccourcis clavier <code>CTRL+ENTREE</code>). Après éxecution, le curseur passe à la ligne suivante.<br />
+</li>
+<li>en sélectionnant la ou les lignes à exécuter et en cliquant sur <code>run</code> (ou <code>CTRL+ENTREE</code>)<br />
+</li>
+<li>par la fonction <code>source("monscript.R")</code>.</li>
+</ul>
+<p>Les commandes dans le script sont séparées soit par <code>;</code> soit par un retour à la ligne</p>
+<p><strong>R is case sensitive.</strong> Majuscules et minuscules sont prises en compte dans les noms de fonctions, d’objets, etc.</p>
+<p>Le caratère <code>#</code> précède des éléments de commentaires et ne sont pas exécutés.</p>
+<p>Certaines commandes s’étendent sur plusieurs lignes. On utilise <code>+</code> à la fin d’une ligne pour une commande multilignes.</p>
+<p></p>
+<p>R stocke les données et les résultats dans des objets. On assigne et on stocke dans des objets avec l’opérateur <code>&lt;-</code>.</p>
+<p>Pour afficher le contenu d’un objet, il suffit d’exécuter son nom.</p>
+<p>Pour afficher tous les objets de l’environnement (ou la mémoire de R) : <code>ls()</code></p>
+<p>Par exemple:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># stocke 3 dans l&#39;objet abc</span>
+abc &lt;-<span class="st"> </span><span class="dv">3</span>
+<span class="co"># affiche le contenu de abc</span>
+abc</code></pre>
+<pre><code>## [1] 3</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># affiche le contenu de l&#39;environnement</span>
+<span class="kw">ls</span>()</code></pre>
+<pre><code>## [1] &quot;abc&quot;</code></pre>
+<p></p>
+<p>Les fonctions sont essentielles pour le travail des données sous <em>R</em>.</p>
+<p>Comme pour les fonctions mathématiques, les fonction R réalisent des opérations sur un <em>input</em> et renvoient un <em>output</em>.
+Par exemple, la fonction <code>mean(x)</code> prend le vecteur de nombres <code>x</code> et renvoie leur moyenne.
+Les inputs sont souvent appelés des arguments de la fonction.</p>
+<p></p>
+<p>L’aide et la documentation des fonctions et des objets de <em>R</em> sont accessibles par <code>?</code></p>
+<p>Par exemple <code>?mean</code></p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>voir le fichier <code>install.packages.R</code> qui regroupe les packages utilisés pour ce cours et ceux conseillés.<a href="premieres-operations-sous-r.html#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="final-words.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="Preface.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="manipulation-des-objets-sous-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

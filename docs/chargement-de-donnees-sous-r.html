@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Chargement de données sous R | A Book for Statistics</title>
+  <meta name="description" content="This is a test for **Statistics* class in Grenoble. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.10 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Chargement de données sous R | A Book for Statistics" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a test for **Statistics* class in Grenoble. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Chargement de données sous R | A Book for Statistics" />
+  
+  <meta name="twitter:description" content="This is a test for **Statistics* class in Grenoble. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="I Joly" />
+
+
+<meta name="date" content="2019-12-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="manipulation-des-objets-sous-r.html">
+<link rel="next" href="methods.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#compile-the-book-in-local"><i class="fa fa-check"></i><b>1.1</b> Compile the book in local</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#push-on-github"><i class="fa fa-check"></i><b>1.2</b> Push on Github</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="Preface.html"><a href="Preface.html"><i class="fa fa-check"></i><b>2</b> Preface</a><ul>
+<li class="chapter" data-level="2.1" data-path="Preface.html"><a href="Preface.html#to-do-list"><i class="fa fa-check"></i><b>2.1</b> To Do List</a></li>
+<li class="chapter" data-level="2.2" data-path="Preface.html"><a href="Preface.html#a-mettre-en-place"><i class="fa fa-check"></i><b>2.2</b> A mettre en place</a></li>
+<li class="chapter" data-level="2.3" data-path="Preface.html"><a href="Preface.html#rappels-dedition"><i class="fa fa-check"></i><b>2.3</b> Rappels d’édition</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="premieres-operations-sous-r.html"><a href="premieres-operations-sous-r.html"><i class="fa fa-check"></i><b>3</b> Premières opérations sous R</a><ul>
+<li class="chapter" data-level="3.1" data-path="premieres-operations-sous-r.html"><a href="premieres-operations-sous-r.html#les-packages"><i class="fa fa-check"></i><b>3.1</b> Les packages</a></li>
+<li class="chapter" data-level="3.2" data-path="premieres-operations-sous-r.html"><a href="premieres-operations-sous-r.html#working-directory-dossier-de-travail"><i class="fa fa-check"></i><b>3.2</b> Working directory: dossier de travail</a></li>
+<li class="chapter" data-level="3.3" data-path="premieres-operations-sous-r.html"><a href="premieres-operations-sous-r.html#codage-r"><i class="fa fa-check"></i><b>3.3</b> Codage R:</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="manipulation-des-objets-sous-r.html"><a href="manipulation-des-objets-sous-r.html"><i class="fa fa-check"></i><b>4</b> Manipulation des objets sous R</a><ul>
+<li class="chapter" data-level="4.1" data-path="manipulation-des-objets-sous-r.html"><a href="manipulation-des-objets-sous-r.html#structures-de-donnees"><i class="fa fa-check"></i><b>4.1</b> Structures de données</a></li>
+<li class="chapter" data-level="4.2" data-path="manipulation-des-objets-sous-r.html"><a href="manipulation-des-objets-sous-r.html#les-vecteurs"><i class="fa fa-check"></i><b>4.2</b> Les Vecteurs</a></li>
+<li class="chapter" data-level="4.3" data-path="manipulation-des-objets-sous-r.html"><a href="manipulation-des-objets-sous-r.html#recyclage-vectoriel"><i class="fa fa-check"></i><b>4.3</b> Recyclage vectoriel</a></li>
+<li class="chapter" data-level="4.4" data-path="manipulation-des-objets-sous-r.html"><a href="manipulation-des-objets-sous-r.html#selectionner-des-sous-ensembles-de-vecteur-avec"><i class="fa fa-check"></i><b>4.4</b> Sélectionner des sous-ensembles de vecteur avec <code>[]</code></a></li>
+<li class="chapter" data-level="4.5" data-path="manipulation-des-objets-sous-r.html"><a href="manipulation-des-objets-sous-r.html#selection-conditionnelle---sous-ensemble-conditionne"><i class="fa fa-check"></i><b>4.5</b> Sélection conditionnelle - sous ensemble conditionné</a></li>
+<li class="chapter" data-level="4.6" data-path="manipulation-des-objets-sous-r.html"><a href="manipulation-des-objets-sous-r.html#listes"><i class="fa fa-check"></i><b>4.6</b> Listes</a></li>
+<li class="chapter" data-level="4.7" data-path="manipulation-des-objets-sous-r.html"><a href="manipulation-des-objets-sous-r.html#matrices"><i class="fa fa-check"></i><b>4.7</b> Matrices</a></li>
+<li class="chapter" data-level="4.8" data-path="manipulation-des-objets-sous-r.html"><a href="manipulation-des-objets-sous-r.html#dataframe"><i class="fa fa-check"></i><b>4.8</b> Dataframe</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="chargement-de-donnees-sous-r.html"><a href="chargement-de-donnees-sous-r.html"><i class="fa fa-check"></i><b>5</b> Chargement de données sous R</a><ul>
+<li class="chapter" data-level="5.1" data-path="chargement-de-donnees-sous-r.html"><a href="chargement-de-donnees-sous-r.html#manipulation-de-donnees"><i class="fa fa-check"></i><b>5.1</b> Manipulation de données</a></li>
+<li class="chapter" data-level="5.2" data-path="chargement-de-donnees-sous-r.html"><a href="chargement-de-donnees-sous-r.html#les-packages-1"><i class="fa fa-check"></i><b>5.2</b> Les packages</a></li>
+<li class="chapter" data-level="5.3" data-path="chargement-de-donnees-sous-r.html"><a href="chargement-de-donnees-sous-r.html#working-directory-dossier-de-travail-1"><i class="fa fa-check"></i><b>5.3</b> Working directory: dossier de travail</a></li>
+<li class="chapter" data-level="5.4" data-path="chargement-de-donnees-sous-r.html"><a href="chargement-de-donnees-sous-r.html#codage-r-1"><i class="fa fa-check"></i><b>5.4</b> Codage R:</a></li>
+<li class="chapter" data-level="5.5" data-path="chargement-de-donnees-sous-r.html"><a href="chargement-de-donnees-sous-r.html#structures-de-donnees-1"><i class="fa fa-check"></i><b>5.5</b> Structures de données</a></li>
+<li class="chapter" data-level="5.6" data-path="chargement-de-donnees-sous-r.html"><a href="chargement-de-donnees-sous-r.html#les-vecteurs-1"><i class="fa fa-check"></i><b>5.6</b> Les Vecteurs</a></li>
+<li class="chapter" data-level="5.7" data-path="chargement-de-donnees-sous-r.html"><a href="chargement-de-donnees-sous-r.html#recyclage-vectoriel-1"><i class="fa fa-check"></i><b>5.7</b> Recyclage vectoriel</a></li>
+<li class="chapter" data-level="5.8" data-path="chargement-de-donnees-sous-r.html"><a href="chargement-de-donnees-sous-r.html#selectionner-des-sous-ensembles-de-vecteur-avec-1"><i class="fa fa-check"></i><b>5.8</b> Sélectionner des sous-ensembles de vecteur avec <code>[]</code></a></li>
+<li class="chapter" data-level="5.9" data-path="chargement-de-donnees-sous-r.html"><a href="chargement-de-donnees-sous-r.html#selection-conditionnelle---sous-ensemble-conditionne-1"><i class="fa fa-check"></i><b>5.9</b> Sélection conditionnelle - sous ensemble conditionné</a></li>
+<li class="chapter" data-level="5.10" data-path="chargement-de-donnees-sous-r.html"><a href="chargement-de-donnees-sous-r.html#listes-1"><i class="fa fa-check"></i><b>5.10</b> Listes</a></li>
+<li class="chapter" data-level="5.11" data-path="chargement-de-donnees-sous-r.html"><a href="chargement-de-donnees-sous-r.html#matrices-1"><i class="fa fa-check"></i><b>5.11</b> Matrices</a></li>
+<li class="chapter" data-level="5.12" data-path="chargement-de-donnees-sous-r.html"><a href="chargement-de-donnees-sous-r.html#dataframe-1"><i class="fa fa-check"></i><b>5.12</b> Dataframe</a></li>
+<li class="chapter" data-level="5.13" data-path="chargement-de-donnees-sous-r.html"><a href="chargement-de-donnees-sous-r.html#manipulation-de-donnees-1"><i class="fa fa-check"></i><b>5.13</b> Manipulation de données</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>6</b> Methods</a></li>
+<li class="chapter" data-level="7" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>7</b> Applications</a><ul>
+<li class="chapter" data-level="7.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>7.1</b> Example one</a></li>
+<li class="chapter" data-level="7.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>7.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>8</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://iragael38.github.io/Git_Book_1/" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Book for <strong>Statistics</strong></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chargement-de-donnees-sous-r" class="section level1 tabset">
+<h1><span class="header-section-number">Chapter 5</span> Chargement de données sous R</h1>
+<div id="manipulation-de-donnees" class="section level2">
+<h2><span class="header-section-number">5.1</span> Manipulation de données</h2>
+<p></p>
+<p>Débutant avec <em>R</em>, il peut sembler efficace de manipuler les données avec un logiciel familier tel que <em>MS Excel</em>, pour corriger les erreurs, ajouter quelques informations ou faire quelques calculs simples.</p>
+<p>Pourtant, le travail sous <em>R</em> est encouragé ici, pour 100% des opérations sur les données !</p>
+<p>Quelques arguments:</p>
+<ul>
+<li><em>MS Excel</em> charge les données réelles, ce qui signifie que les modifications sont sauvegardées dans le fichier de données même. De plus, aucun historique des manipulations n’est sauvegardé, il est donc difficile, voire impossible, de conserver une trace des changements. <em>Au contraire, R</em>, charge une copie des données dans sa mémoire et n’altère pas directement les données. Il permet de fonctionner avec des scripts, qui listent les manipulations appliquées aux données, les rendant ainsi <strong>reproductibles</strong> et <strong>transparentes</strong>.<br />
+</li>
+<li>Travailler directement sur les données peut produire des erreurs qui sont alors difficiles à identifier et à corriger. Avec <em>R</em> il est facile de détecter les erreurs et problèmes systématiques à partir de petits programmes.<br />
+</li>
+<li>Différents formats de données peuvent être chargés avec <em>R</em>, notamment les formats de logiciels spécialisés tels que SAS, Spss, Stata, etc.</li>
+</ul>
+<p></p>
+<p><strong>Dataframe</strong>
+Une base de données sous <em>R</em> est appelée une <code>dataframe</code>, équivalent à une matrice de données où les lignes sont indéxées par leur numéro et les colonnes par des noms de variables.
+Les bases de données d’autres formats (par ex. ceux d’autres logiciels) peuvent être importées (ou chargées) sous <em>R</em>.</p>
+<p><strong>Formats de données R</strong><br />
+Les fichiers <code>.Rdata</code> ou <code>.rda</code> contiennent un ou plusieurs objets <code>R</code> (dataframes, fonctions, shapefiles, etc.)</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Chargement d&#39;un fichier (fictif) de données dans R: </span>
+<span class="kw">load</span>(<span class="st">&#39;DATA</span><span class="ch">\\</span><span class="st">Movie.Data.Clean.RData&#39;</span>)
+<span class="co"># utiliser ls() pour lister les objets de l&#39;environnement</span>
+<span class="kw">ls</span>()</code></pre>
+<pre><code>##  [1] &quot;a&quot;          &quot;abc&quot;        &quot;b&quot;          &quot;char_vec&quot;   &quot;mary_info&quot; 
+##  [6] &quot;mon_vec&quot;    &quot;Movie.Data&quot; &quot;mydata&quot;     &quot;mylist&quot;     &quot;scores&quot;</code></pre>
+<p>Les fichiers <code>.rds</code> contiennent un objet <em>R</em> sans nom. Cet objet est donc stocké dans une seule variable. <code>readRDS('file.rds')</code> permet de charger un tel fichier et <code>str(newdat)</code>de savoir quels objets sont dans l’objet chargé.</p>
+<p><strong>Les fichers texte</strong></p>
+<p>Les fichiers <code>.txt</code>ou <code>.csv</code> sont des fichiers de données brutes, sans mise en forme des données (par exemple format de date).</p>
+<p>Dans un fichier texte, une ligne correspond à une observation (une ligne du dataframe). Sur la ligne, les valeurs des différentes colonnes sont séparées par un caractère séparateur (souvent le <code>;</code> ou la tabulation).</p>
+<p><code>read.table('file.txt', header=TRUE)</code> permet de charger un fichier texte où la 1ère ligne contient les noms de variables.</p>
+<p><em>Problèmes classiques de lecture des fichiers textes</em></p>
+<ol style="list-style-type: decimal">
+<li><em>R</em> ne trouve pas le fichier que vous voulez charger:</li>
+</ol>
+<ul>
+<li>Vérifiez votre working directory (dossier de travail) <code>getwd()</code>. Ce dossier contient-il le fichier que vous voulez charger ? Modifiez ce dossier avec <code>setwd()</code>.<br />
+</li>
+<li>Parfois il est utile de préciser tout le chemin d’accès dans le nom du fichier à charger. Par exemple: <code>"C://Documents//data.txt"</code> sous Windows ou sous Mac <code>"/Users/Moi/Documents/data.txt"</code>.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li><p><code>Incorrect delimiter</code>. Aucun message d’erreur n’est affiché, mais les données paraissent étranges. Le séparateur de variable est mal spécifié. Excel utilise souvent la <code>,</code> alors que d’autres logiciels utilisent l’espace ou la tabulation.
+<code>dat &lt;- read.table("file.csv", header=TRUE, sep=',')</code>permet de préciser le séparateur.</p></li>
+<li><p><em>Décimale</em>. Les données issues de locigiels anglosaxons utilisent le <code>.</code> pour indiquer les décimales, plutôt que la <code>,</code>. Cela peut être précisé avec: <code>dat &lt;- read.table("file.csv", header=TRUE, sep=',', dec='.')</code></p></li>
+</ol>
+<p>Cependant, le <code>.</code> est aussi parfois utilisé pour séparer les milliers. C’est alors à l’exportation des données que l’on doit s’assurer du caractère des décimales et qu’il n’y a pas de caractère pour les milliers.</p>
+<ol start="4" style="list-style-type: decimal">
+<li><em>Erreurs sur les variables</em>. Dans certains cas, le problème d’importation affecte une ou plusieurs variables.</li>
+</ol>
+<ul>
+<li>Une chaine de caractère est reconnue comme un facteur : <code>as.character(data$V1)</code> pour convertir une variable en caractère.</li>
+<li>Dans un champs de caractère, le <code>.</code> est utilisé pour les milliers, alors que la <code>,</code>marque les décimales. <code>gsub("\\.", "", data$V1)</code>supprime les <code>.</code> dans le champs de valeurs.</li>
+<li>La <code>,</code>marque les décimales au lieu du <code>.</code>: <code>gsub("\\,", "\\.", data$V1)</code> : remplace les <code>,</code> par un <code>.</code></li>
+<li>pour convertir une chaine de caractères en numérique: <code>as.numeric(data$V1)</code></li>
+</ul>
+<p>Par exemple:</p>
+<pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;file.txt&quot;</span>, <span class="dt">header=</span><span class="ot">TRUE</span>, <span class="dt">stringsAsFactors=</span><span class="ot">FALSE</span>)
+data<span class="op">$</span>V1 &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">gsub</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">,&quot;</span>, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">.&quot;</span>, <span class="kw">gsub</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">.&quot;</span>, <span class="st">&quot;&quot;</span>, data<span class="op">$</span>V1)))</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li><p>les valeurs manquantes sont indiquées par <code>.</code>au lieu d’un vide: <code>NA</code>:<br />
+<code>read.table("file.txt", header=TRUE, na.strings='.')</code> précise le codage des vides. Si deux codages existent dans le fichier des <code>.</code> et les caractères <em>NA</em> :
+<code>read.table("file.txt", header=TRUE, na.strings=c('.', NA))</code></p></li>
+<li><p><em>Nom de colonne manquant</em>:<br />
+R considère qu’une colonne sans nom contient les noms de lignes.<code>read.table("file.csv", header=TRUE, row.names=NULL)</code> force la colonne sans nom à être prise comme une variable.</p></li>
+<li><p><em>Lignes de longueur différente</em>:<br />
+Si des lignes ont des longueurs différentes, <em>R</em> ne retrouve pas toutes les variables. Il faut le forcer par :<code>read.table("file.csv", header=TRUE, fill=TRUE)</code></p></li>
+<li><p><em>drop des premières lignes</em>:<br />
+On peut commencer la lecture du fichier au numéro de ligne souhaité: <code>read.table("file.csv", header=TRUE, skip=4)</code>: pour commencer à la ligne 5.</p></li>
+</ol>
+<p>Recommendations de lecture:<br />
+- <a href="https://stats.idre.ucla.edu/stat/data/intro_r/intro_r_flat.html" class="uri">https://stats.idre.ucla.edu/stat/data/intro_r/intro_r_flat.html</a></p>
+
+</div>
+<div id="les-packages-1" class="section level2">
+<h2><span class="header-section-number">5.2</span> Les packages</h2>
+<p></p>
+<p><code>R</code> a une configuration de base, qui peut être complétée par de nombreux packages ajoutant différentes fonctions.</p>
+<p>Les packages doivent être installés une première fois sur le pc avant de pouvoir être utilisés. <code>install.packages("pack")</code> téléchargera est installera le package.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p></p>
+<p>Les packages installés sur une machine ne sont pas chargés en mémoire au démarrage. On charge les packages requis dans l’environnement <em>R</em> par <code>library()</code> ou <code>require()</code></p>
+<p>Les fonctions et les données contenus dans le package sont alors accessibles.</p>
+<p></p>
+<p>Le package <code>installr</code>propose la fonction <code>updateR()</code>, qui met automatiquement à jour la version de <em>R</em> et les packages.</p>
+</div>
+<div id="working-directory-dossier-de-travail-1" class="section level2">
+<h2><span class="header-section-number">5.3</span> Working directory: dossier de travail</h2>
+<p>Sans précision particulière, les fichiers seront chargés et sauvegardés dans le <code>working directory</code> (wd): le dossier dans lequel <em>R</em> va stocker et rechercher les fichiers. Les fonctions <code>getwd()</code> et <code>setwd()</code> permettent respectivement de voir le dossier de travail actuel et de le modifier.</p>
+<p>
+<em>R</em> utilise un autre type d’écriture de chemin d’accès que celui de Windows (<code>"C:\Dossier\sous-dossier"</code>). Sous <em>R</em>, il faut utiliser <code>"C:/Dossier/sous-dossier"</code> ou "<code>C:\\Dossier\\sous-dossier"</code>. Et sous Mac : <code>"/Users/Moi/Dossier/"</code></p>
+</div>
+<div id="codage-r-1" class="section level2">
+<h2><span class="header-section-number">5.4</span> Codage R:</h2>
+<p>
+Le code <em>R</em> peut être saisi directement dans la console ligne à ligne ou être sauvé comme un script: une succession de lignes de code. Un script peut être sauvegardé dans un fichier d’extension <code>.R</code>. Un script peut être exécuté de plusieurs façons:</p>
+<ul>
+<li>en gardant le curseur sur la ligne à exécuter et en cliquant sur le bouton <code>run</code> (ou avec le raccourcis clavier <code>CTRL+ENTREE</code>). Après éxecution, le curseur passe à la ligne suivante.<br />
+</li>
+<li>en sélectionnant la ou les lignes à exécuter et en cliquant sur <code>run</code> (ou <code>CTRL+ENTREE</code>)<br />
+</li>
+<li>par la fonction <code>source("monscript.R")</code>.</li>
+</ul>
+<p>Les commandes dans le script sont séparées soit par <code>;</code> soit par un retour à la ligne</p>
+<p><strong>R is case sensitive.</strong> Majuscules et minuscules sont prises en compte dans les noms de fonctions, d’objets, etc.</p>
+<p>Le caratère <code>#</code> précède des éléments de commentaires et ne sont pas exécutés.</p>
+<p>Certaines commandes s’étendent sur plusieurs lignes. On utilise <code>+</code> à la fin d’une ligne pour une commande multilignes.</p>
+<p></p>
+<p>R stocke les données et les résultats dans des objets. On assigne et on stocke dans des objets avec l’opérateur <code>&lt;-</code>.</p>
+<p>Pour afficher le contenu d’un objet, il suffit d’exécuter son nom.</p>
+<p>Pour afficher tous les objets de l’environnement (ou la mémoire de R) : <code>ls()</code></p>
+<p>Par exemple:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># stocke 3 dans l&#39;objet abc</span>
+abc &lt;-<span class="st"> </span><span class="dv">3</span>
+<span class="co"># affiche le contenu de abc</span>
+abc</code></pre>
+<pre><code>## [1] 3</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># affiche le contenu de l&#39;environnement</span>
+<span class="kw">ls</span>()</code></pre>
+<pre><code>##  [1] &quot;a&quot;          &quot;abc&quot;        &quot;b&quot;          &quot;char_vec&quot;   &quot;mary_info&quot; 
+##  [6] &quot;mon_vec&quot;    &quot;Movie.Data&quot; &quot;mydata&quot;     &quot;mylist&quot;     &quot;scores&quot;</code></pre>
+<p></p>
+<p>Les fonctions sont essentielles pour le travail des données sous <em>R</em>.</p>
+<p>Comme pour les fonctions mathématiques, les fonction R réalisent des opérations sur un <em>input</em> et renvoient un <em>output</em>.
+Par exemple, la fonction <code>mean(x)</code> prend le vecteur de nombres <code>x</code> et renvoie leur moyenne.
+Les inputs sont souvent appelés des arguments de la fonction.</p>
+<p></p>
+<p>L’aide et la documentation des fonctions et des objets de <em>R</em> sont accessibles par <code>?</code></p>
+<p>Par exemple <code>?mean</code></p>
+
+</div>
+<div id="structures-de-donnees-1" class="section level2">
+<h2><span class="header-section-number">5.5</span> Structures de données</h2>
+<p>Plusieurs types d’objets de <em>R</em> peuvent contenir des données.</p>
+</div>
+<div id="les-vecteurs-1" class="section level2">
+<h2><span class="header-section-number">5.6</span> Les Vecteurs</h2>
+<p>Les vecteurs sont unidimentionnels et homogènes.
+Une variable seule peut être représentée par un vecteur de l’un des types suivants:<br />
+- <code>logical</code>: la variable prend les valeurs <code>TRUE</code> ou <code>FALSE</code> (1 ou 0)<br />
+- <code>integer</code>: un entier uniquement (représenté par un nombre suivi de <code>L</code>)<br />
+- <code>numeric</code> ou <code>double</code>: un nombre réel<br />
+- <code>character</code>: une chaine de caractères (du texte)</p>
+<p>Une valeur seule est un vecteur de longueur 1.</p>
+<p><code>c()</code> est la fonction de concaténation. elle combine les valeurs de différents type en un vecteur.<br />
+<code>typeof()</code> identifie le type du vecteur. <code>length()</code> renvoie la longueur du vecteur.</p>
+<p>Exemple:</p>
+<pre class="sourceCode r"><code class="sourceCode r">mon_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)
+mon_vec</code></pre>
+<pre><code>## [1] 1 3 5</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">typeof</span>(mon_vec)</code></pre>
+<pre><code>## [1] &quot;double&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">char_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;these&quot;</span>, <span class="st">&quot;are&quot;</span>, <span class="st">&quot;some&quot;</span>, <span class="st">&quot;words&quot;</span>)
+<span class="kw">length</span>(char_vec)</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p><strong>Répétition et séquence</strong><br />
+<code>rep()</code> créé un vecteur en répétant les élements:<br />
+<code>seq()</code> créé un vecteur en faisant une séquence d’éléments.<br />
+L’expression <code>m:n</code> génère une séquence d’entiers de <code>m</code>à <code>n</code><br />
+Par exemple:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># répéter 3 fois 0</span>
+<span class="kw">rep</span>(<span class="dv">0</span>, <span class="dt">times=</span><span class="dv">3</span>)</code></pre>
+<pre><code>## [1] 0 0 0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># répéter 4 fois &quot;abc&quot;</span>
+<span class="kw">rep</span>(<span class="st">&quot;abc&quot;</span>, <span class="dv">4</span>)</code></pre>
+<pre><code>## [1] &quot;abc&quot; &quot;abc&quot; &quot;abc&quot; &quot;abc&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Séquence de 1 à 5 avec un pas de 2</span>
+<span class="kw">seq</span>(<span class="dt">from=</span><span class="dv">1</span>, <span class="dt">to=</span><span class="dv">5</span>, <span class="dt">by=</span><span class="dv">2</span>)</code></pre>
+<pre><code>## [1] 1 3 5</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Séquence de 10 à 0 avec un pas de -5</span>
+<span class="kw">seq</span>(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">-5</span>)</code></pre>
+<pre><code>## [1] 10  5  0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Séquence d&#39;entiers de 3 à 7</span>
+<span class="dv">3</span><span class="op">:</span><span class="dv">7</span></code></pre>
+<pre><code>## [1] 3 4 5 6 7</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Répétition de séquence:</span>
+<span class="kw">rep</span>(<span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">1</span>), <span class="dt">times=</span><span class="dv">2</span>)</code></pre>
+<pre><code>## [1] 1 2 3 1 2 3</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Séquence de répétition</span>
+<span class="kw">rep</span>(<span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">1</span>), <span class="dt">each=</span><span class="dv">2</span>)</code></pre>
+<pre><code>## [1] 1 1 2 2 3 3</code></pre>
+</div>
+<div id="recyclage-vectoriel-1" class="section level2">
+<h2><span class="header-section-number">5.7</span> Recyclage vectoriel</h2>
+<p>Lorsque des opérations sont réalisées sur deux vecteurs ou plus, dont les dimensions sont inégales, les valeurs du vecteur le plus court seront <em>‘recyclées’</em> pour compléter le vecteur jusqu’à obtenir la même dimension que le vecteur le plus long.</p>
+<p>Dans l’exemple ci-dessous, le vecteur <code>c(1)</code> de taille 1 est recyclé pour devenir <code>c(1,1,1)</code></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span></code></pre>
+<pre><code>## [1] 2 3 4</code></pre>
+<p>Ici, le vecteur <code>c(1,2)</code> est recyclé deux fois pour devenir <code>c(1,2,1,2,1,2)</code></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>) <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</code></pre>
+<pre><code>## [1] 2 4 4 6 6 8</code></pre>
+<p><code>c(2)</code> devient <code>c(2,2,2)</code></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>) <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span></code></pre>
+<pre><code>## [1]  TRUE FALSE FALSE</code></pre>
+<p>Si le recyclage est partiel, on a le message</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">20</span>)</code></pre>
+<pre><code>## Warning in c(2, 3, 4) + c(10, 20): la taille d&#39;un objet plus long n&#39;est pas
+## multiple de la taille d&#39;un objet plus court</code></pre>
+<pre><code>## [1] 12 23 14</code></pre>
+</div>
+<div id="selectionner-des-sous-ensembles-de-vecteur-avec-1" class="section level2">
+<h2><span class="header-section-number">5.8</span> Sélectionner des sous-ensembles de vecteur avec <code>[]</code></h2>
+<p>Les éléments composant un vecteur peuvent être sélectionnés en spécifiant sa position dans le vecteur entre <code>[]</code></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># créer un vecteur de 10 à 1</span>
+a &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">10</span>,<span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>) ; a</code></pre>
+<pre><code>##  [1] 10  9  8  7  6  5  4  3  2  1</code></pre>
+<p>Par exemple : Sélectionner le 2ème élément</p>
+<pre class="sourceCode r"><code class="sourceCode r">a[<span class="dv">2</span>]</code></pre>
+<pre><code>## [1] 9</code></pre>
+<p>Sélectionner les 5 premiers éléments</p>
+<pre class="sourceCode r"><code class="sourceCode r">a[<span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">5</span>)]</code></pre>
+<pre><code>## [1] 10  9  8  7  6</code></pre>
+<p>Sélection des premier, troisième et quatrième éléments:</p>
+<pre class="sourceCode r"><code class="sourceCode r">a[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</code></pre>
+<pre><code>## [1] 10  8  7</code></pre>
+<p>Les éléments peuvent être nommés, et appelés par leur nom.</p>
+<pre class="sourceCode r"><code class="sourceCode r">scores &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">John=</span><span class="dv">25</span>, <span class="dt">Marge=</span><span class="dv">34</span>, <span class="dt">Dan=</span><span class="dv">24</span>, <span class="dt">Emily=</span><span class="dv">29</span>)
+scores[<span class="kw">c</span>(<span class="st">&quot;John&quot;</span>, <span class="st">&quot;Emily&quot;</span>)]</code></pre>
+<pre><code>##  John Emily 
+##    25    29</code></pre>
+</div>
+<div id="selection-conditionnelle---sous-ensemble-conditionne-1" class="section level2">
+<h2><span class="header-section-number">5.9</span> Sélection conditionnelle - sous ensemble conditionné</h2>
+<p>Le <em>subsetting</em> logique peut être fait avec un vecteur <code>(TRUE/FALSE)</code></p>
+<pre class="sourceCode r"><code class="sourceCode r">scores[<span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)]</code></pre>
+<pre><code>## Marge   Dan 
+##    34    24</code></pre>
+<p>Il peut aussi être fait avec une condition</p>
+<pre class="sourceCode r"><code class="sourceCode r">scores[scores<span class="op">&lt;</span><span class="dv">30</span>]</code></pre>
+<pre><code>##  John   Dan Emily 
+##    25    24    29</code></pre>
+</div>
+<div id="listes-1" class="section level2">
+<h2><span class="header-section-number">5.10</span> Listes</h2>
+<p>Les listes sont des éléments uni-dimensionnels, mais dont les éléments peuvent être de types différents : des vecteurs (de toute dimension), des listes, des matrices, des dataframes.</p>
+<p>
+Une liste composée d’un vecteur, d’un vecteur d’entiers et un vecteur de caractères.</p>
+<pre class="sourceCode r"><code class="sourceCode r">mylist &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="fl">1.1</span>, <span class="kw">c</span>(1L,3L,7L), <span class="kw">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;def&quot;</span>))
+mylist</code></pre>
+<pre><code>## [[1]]
+## [1] 1.1
+## 
+## [[2]]
+## [1] 1 3 7
+## 
+## [[3]]
+## [1] &quot;abc&quot; &quot;def&quot;</code></pre>
+<p>Les éléments peuvent être nommés</p>
+<pre class="sourceCode r"><code class="sourceCode r">mary_info &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">classes=</span><span class="kw">c</span>(<span class="st">&quot;Biology&quot;</span>, <span class="st">&quot;Math&quot;</span>, <span class="st">&quot;Music&quot;</span>,
+                            <span class="st">&quot;Physics&quot;</span>),
+                  <span class="dt">friends=</span><span class="kw">c</span>(<span class="st">&quot;John&quot;</span>, <span class="st">&quot;Dan&quot;</span>, <span class="st">&quot;Emily&quot;</span>),
+                  <span class="dt">SAT=</span><span class="dv">1450</span>)
+mary_info</code></pre>
+<pre><code>## $classes
+## [1] &quot;Biology&quot; &quot;Math&quot;    &quot;Music&quot;   &quot;Physics&quot;
+## 
+## $friends
+## [1] &quot;John&quot;  &quot;Dan&quot;   &quot;Emily&quot;
+## 
+## $SAT
+## [1] 1450</code></pre>
+<p></p>
+<p>Comme précédemment, l’accès aux composants d’une liste se fait soit par <code>[[]]</code> pour accèder avec la position, soit avec <code>$</code> pour accèder avec le nom.</p>
+<p>Par la position</p>
+<pre class="sourceCode r"><code class="sourceCode r">mary_info[[<span class="dv">2</span>]]</code></pre>
+<pre><code>## [1] &quot;John&quot;  &quot;Dan&quot;   &quot;Emily&quot;</code></pre>
+<p>Par le nom</p>
+<pre class="sourceCode r"><code class="sourceCode r">mary_info<span class="op">$</span>SAT</code></pre>
+<pre><code>## [1] 1450</code></pre>
+<p>Le second élément du vecteur <code>friend</code></p>
+<pre class="sourceCode r"><code class="sourceCode r">mary_info<span class="op">$</span>friends[<span class="dv">2</span>]</code></pre>
+<pre><code>## [1] &quot;Dan&quot;</code></pre>
+</div>
+<div id="matrices-1" class="section level2">
+<h2><span class="header-section-number">5.11</span> Matrices</h2>
+<p>Les matrices sont des structures de données à deux dimensions et homogènes.</p>
+<p></p>
+<p>L’input de <code>matrix()</code> est un vecteur qui est transformé en une matrice en 2 dimensions, selon les spécifications <code>nrow</code> et <code>ncol</code>.</p>
+<p>Par défaut, la matrice est remplie colonne par colonne, cela est modifié par <code>byrow=T</code></p>
+<p>Par exemple: une matrice 2lx3c, remplie par colonne:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># on remplit les colonnes avec le vecteur de 1 à 6 sur 2 lignes</span>
+a &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">nrow=</span><span class="dv">2</span>)
+a</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6</code></pre>
+<p>Remplissage par ligne</p>
+<pre class="sourceCode r"><code class="sourceCode r">b &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">5</span><span class="op">:</span><span class="dv">14</span>, <span class="dt">nrow=</span><span class="dv">2</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)
+b</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    5    6    7    8    9
+## [2,]   10   11   12   13   14</code></pre>
+<p></p>
+<p>L’omission de <code>row</code> correspond à la sélection de toutes les lignes. L’omission de <code>column</code> sélectionne toutes les colonnes.</p>
+<p>Sélection de la ligne 2, colonne 3</p>
+<pre class="sourceCode r"><code class="sourceCode r">a[<span class="dv">2</span>,<span class="dv">3</span>]</code></pre>
+<pre><code>## [1] 6</code></pre>
+<p>Toutes les lignes de la colonne 2</p>
+<pre class="sourceCode r"><code class="sourceCode r">b[,<span class="dv">2</span>]</code></pre>
+<pre><code>## [1]  6 11</code></pre>
+<p>Toutes les colonnes de la ligne 1</p>
+<pre class="sourceCode r"><code class="sourceCode r">a[<span class="dv">1</span>,]</code></pre>
+<pre><code>## [1] 1 3 5</code></pre>
+</div>
+<div id="dataframe-1" class="section level2">
+<h2><span class="header-section-number">5.12</span> Dataframe</h2>
+<p>Les données de l’analyse statistique sont typiquement stockées dans des <code>dataframe</code>.</p>
+<p>Elles combinent les possibilités des matrices et des listes.</p>
+<p>Comme pour les matrices, les <code>dataframe</code> sont rectangulaires, les colonnes sont les variables et les lignes sont les observations de ces variables.
+Comme les listes, les <code>dataframe</code> peuvent avoir des éléments (les colonnes) de différents types (numérique, caractère, facteurs, logique,etc.)</p>
+<p>Mais les éléments d’un <code>dataframe</code> doivent être de longueur égale.</p>
+<p></p>
+<p>La syntaxe est la même que pour <code>list()</code>, mais les éléments doivent être de même longueur.
+Les éléments peuvent être nommés.</p>
+<p>Par exemple, un vecteur logique et un vecteur numérique</p>
+<pre class="sourceCode r"><code class="sourceCode r">mydata &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">diabetic =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>), 
+                     <span class="dt">height =</span> <span class="kw">c</span>(<span class="dv">65</span>, <span class="dv">69</span>, <span class="dv">71</span>, <span class="dv">73</span>))
+mydata</code></pre>
+<pre><code>##   diabetic height
+## 1     TRUE     65
+## 2    FALSE     69
+## 3     TRUE     71
+## 4    FALSE     73</code></pre>
+<p></p>
+<p>Comme pour les matrices et les listes, les sélections sont faites avec<code>[rows, columns]</code> ou avec le nom de la variable.</p>
+<p>Par exemple</p>
+<pre class="sourceCode r"><code class="sourceCode r">mydata[<span class="dv">3</span>,<span class="dv">2</span>]</code></pre>
+<pre><code>## [1] 71</code></pre>
+<p>Ou</p>
+<pre class="sourceCode r"><code class="sourceCode r">mydata[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="st">&quot;height&quot;</span>]</code></pre>
+<pre><code>## [1] 65 69</code></pre>
+<p>Ou</p>
+<pre class="sourceCode r"><code class="sourceCode r">mydata[,<span class="st">&quot;diabetic&quot;</span>]</code></pre>
+<pre><code>## [1]  TRUE FALSE  TRUE FALSE</code></pre>
+<p>\textbf{Accéder aux variables ou colonnes par le nom ou <code>$</code>}
+Par exemple</p>
+<pre class="sourceCode r"><code class="sourceCode r">mydata<span class="op">$</span>height[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</code></pre>
+<pre><code>## [1] 69 71</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">mydata[[<span class="st">&quot;height&quot;</span>]]</code></pre>
+<pre><code>## [1] 65 69 71 73</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">mydata[[<span class="st">&quot;height&quot;</span>]][<span class="dv">2</span>]</code></pre>
+<pre><code>## [1] 69</code></pre>
+<p></p>
+<p><code>colnames(data_frame)</code> renvoie les noms des colonnes d’une dataframe (ou d’une matrice).<br />
+<code>colnames(data_frame) &lt;- c("some", "names")</code> assigne des noms aux colonnes.<br />
+Par exemple</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(mydata)</code></pre>
+<pre><code>## [1] &quot;diabetic&quot; &quot;height&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(mydata) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Diabetic&quot;</span>, <span class="st">&quot;Height&quot;</span>)
+<span class="kw">colnames</span>(mydata)</code></pre>
+<pre><code>## [1] &quot;Diabetic&quot; &quot;Height&quot;</code></pre>
+<p>Pour changer le nom d’une variable:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(mydata)[<span class="dv">1</span>] &lt;-<span class="st"> &quot;Diabetes&quot;</span>
+<span class="kw">colnames</span>(mydata)</code></pre>
+<pre><code>## [1] &quot;Diabetes&quot; &quot;Height&quot;</code></pre>
+<p>Enfin on peut <em>“copier/coller”</em> une variable sous condition :</p>
+<p><code>dat[dat$Subject=='s2',]$RT &lt;- dat[dat$Subject=='s2',]$Trial</code></p>
+<p></p>
+<p>Pour les objets à 2 dimensions <code>dim()</code> renvoie le nombre de lignes et de colonnes.</p>
+<p>On utilise <code>str()</code> pour connaître la structure d’un objet et le type de ses éléments.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(mydata)</code></pre>
+<pre><code>## [1] 4 2</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(mydata)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    4 obs. of  2 variables:
+##  $ Diabetes: logi  TRUE FALSE TRUE FALSE
+##  $ Height  : num  65 69 71 73</code></pre>
+
+</div>
+<div id="manipulation-de-donnees-1" class="section level2">
+<h2><span class="header-section-number">5.13</span> Manipulation de données</h2>
+<p></p>
+<p>Débutant avec <em>R</em>, il peut sembler efficace de manipuler les données avec un logiciel familier tel que <em>MS Excel</em>, pour corriger les erreurs, ajouter quelques informations ou faire quelques calculs simples.</p>
+<p>Pourtant, le travail sous <em>R</em> est encouragé ici, pour 100% des opérations sur les données !</p>
+<p>Quelques arguments:</p>
+<ul>
+<li><em>MS Excel</em> charge les données réelles, ce qui signifie que les modifications sont sauvegardées dans le fichier de données même. De plus, aucun historique des manipulations n’est sauvegardé, il est donc difficile, voire impossible, de conserver une trace des changements. <em>Au contraire, R</em>, charge une copie des données dans sa mémoire et n’altère pas directement les données. Il permet de fonctionner avec des scripts, qui listent les manipulations appliquées aux données, les rendant ainsi <strong>reproductibles</strong> et <strong>transparentes</strong>.<br />
+</li>
+<li>Travailler directement sur les données peut produire des erreurs qui sont alors difficiles à identifier et à corriger. Avec <em>R</em> il est facile de détecter les erreurs et problèmes systématiques à partir de petits programmes.<br />
+</li>
+<li>Différents formats de données peuvent être chargés avec <em>R</em>, notamment les formats de logiciels spécialisés tels que SAS, Spss, Stata, etc.</li>
+</ul>
+<p></p>
+<p><strong>Dataframe</strong>
+Une base de données sous <em>R</em> est appelée une <code>dataframe</code>, équivalent à une matrice de données où les lignes sont indéxées par leur numéro et les colonnes par des noms de variables.
+Les bases de données d’autres formats (par ex. ceux d’autres logiciels) peuvent être importées (ou chargées) sous <em>R</em>.</p>
+<p><strong>Formats de données R</strong><br />
+Les fichiers <code>.Rdata</code> ou <code>.rda</code> contiennent un ou plusieurs objets <code>R</code> (dataframes, fonctions, shapefiles, etc.)</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Chargement d&#39;un fichier (fictif) de données dans R: </span>
+<span class="kw">load</span>(<span class="st">&#39;DATA</span><span class="ch">\\</span><span class="st">Movie.Data.Clean.RData&#39;</span>)
+<span class="co"># utiliser ls() pour lister les objets de l&#39;environnement</span>
+<span class="kw">ls</span>()</code></pre>
+<pre><code>##  [1] &quot;a&quot;          &quot;abc&quot;        &quot;b&quot;          &quot;char_vec&quot;   &quot;mary_info&quot; 
+##  [6] &quot;mon_vec&quot;    &quot;Movie.Data&quot; &quot;mydata&quot;     &quot;mylist&quot;     &quot;scores&quot;</code></pre>
+<p>Les fichiers <code>.rds</code> contiennent un objet <em>R</em> sans nom. Cet objet est donc stocké dans une seule variable. <code>readRDS('file.rds')</code> permet de charger un tel fichier et <code>str(newdat)</code>de savoir quels objets sont dans l’objet chargé.</p>
+<p><strong>Les fichers texte</strong></p>
+<p>Les fichiers <code>.txt</code>ou <code>.csv</code> sont des fichiers de données brutes, sans mise en forme des données (par exemple format de date).</p>
+<p>Dans un fichier texte, une ligne correspond à une observation (une ligne du dataframe). Sur la ligne, les valeurs des différentes colonnes sont séparées par un caractère séparateur (souvent le <code>;</code> ou la tabulation).</p>
+<p><code>read.table('file.txt', header=TRUE)</code> permet de charger un fichier texte où la 1ère ligne contient les noms de variables.</p>
+<p><em>Problèmes classiques de lecture des fichiers textes</em></p>
+<ol style="list-style-type: decimal">
+<li><em>R</em> ne trouve pas le fichier que vous voulez charger:</li>
+</ol>
+<ul>
+<li>Vérifiez votre working directory (dossier de travail) <code>getwd()</code>. Ce dossier contient-il le fichier que vous voulez charger ? Modifiez ce dossier avec <code>setwd()</code>.<br />
+</li>
+<li>Parfois il est utile de préciser tout le chemin d’accès dans le nom du fichier à charger. Par exemple: <code>"C://Documents//data.txt"</code> sous Windows ou sous Mac <code>"/Users/Moi/Documents/data.txt"</code>.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li><p><code>Incorrect delimiter</code>. Aucun message d’erreur n’est affiché, mais les données paraissent étranges. Le séparateur de variable est mal spécifié. Excel utilise souvent la <code>,</code> alors que d’autres logiciels utilisent l’espace ou la tabulation.
+<code>dat &lt;- read.table("file.csv", header=TRUE, sep=',')</code>permet de préciser le séparateur.</p></li>
+<li><p><em>Décimale</em>. Les données issues de locigiels anglosaxons utilisent le <code>.</code> pour indiquer les décimales, plutôt que la <code>,</code>. Cela peut être précisé avec: <code>dat &lt;- read.table("file.csv", header=TRUE, sep=',', dec='.')</code></p></li>
+</ol>
+<p>Cependant, le <code>.</code> est aussi parfois utilisé pour séparer les milliers. C’est alors à l’exportation des données que l’on doit s’assurer du caractère des décimales et qu’il n’y a pas de caractère pour les milliers.</p>
+<ol start="4" style="list-style-type: decimal">
+<li><em>Erreurs sur les variables</em>. Dans certains cas, le problème d’importation affecte une ou plusieurs variables.</li>
+</ol>
+<ul>
+<li>Une chaine de caractère est reconnue comme un facteur : <code>as.character(data$V1)</code> pour convertir une variable en caractère.</li>
+<li>Dans un champs de caractère, le <code>.</code> est utilisé pour les milliers, alors que la <code>,</code>marque les décimales. <code>gsub("\\.", "", data$V1)</code>supprime les <code>.</code> dans le champs de valeurs.</li>
+<li>La <code>,</code>marque les décimales au lieu du <code>.</code>: <code>gsub("\\,", "\\.", data$V1)</code> : remplace les <code>,</code> par un <code>.</code></li>
+<li>pour convertir une chaine de caractères en numérique: <code>as.numeric(data$V1)</code></li>
+</ul>
+<p>Par exemple:</p>
+<pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;file.txt&quot;</span>, <span class="dt">header=</span><span class="ot">TRUE</span>, <span class="dt">stringsAsFactors=</span><span class="ot">FALSE</span>)
+data<span class="op">$</span>V1 &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">gsub</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">,&quot;</span>, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">.&quot;</span>, <span class="kw">gsub</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">.&quot;</span>, <span class="st">&quot;&quot;</span>, data<span class="op">$</span>V1)))</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li><p>les valeurs manquantes sont indiquées par <code>.</code>au lieu d’un vide: <code>NA</code>:<br />
+<code>read.table("file.txt", header=TRUE, na.strings='.')</code> précise le codage des vides. Si deux codages existent dans le fichier des <code>.</code> et les caractères <em>NA</em> :
+<code>read.table("file.txt", header=TRUE, na.strings=c('.', NA))</code></p></li>
+<li><p><em>Nom de colonne manquant</em>:<br />
+R considère qu’une colonne sans nom contient les noms de lignes.<code>read.table("file.csv", header=TRUE, row.names=NULL)</code> force la colonne sans nom à être prise comme une variable.</p></li>
+<li><p><em>Lignes de longueur différente</em>:<br />
+Si des lignes ont des longueurs différentes, <em>R</em> ne retrouve pas toutes les variables. Il faut le forcer par :<code>read.table("file.csv", header=TRUE, fill=TRUE)</code></p></li>
+<li><p><em>drop des premières lignes</em>:<br />
+On peut commencer la lecture du fichier au numéro de ligne souhaité: <code>read.table("file.csv", header=TRUE, skip=4)</code>: pour commencer à la ligne 5.</p></li>
+</ol>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>voir le fichier <code>install.packages.R</code> qui regroupe les packages utilisés pour ce cours et ceux conseillés.<a href="chargement-de-donnees-sous-r.html#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="manipulation-des-objets-sous-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["Git_Book_1.pdf", "Git_Book_1.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
