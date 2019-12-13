@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1576228334973.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2079895483",
+    "id" : "D8FCBDEB",
+    "lastKnownWriteTime" : 1576228331,
+    "last_content_update" : 1576228331,
+    "path" : "G:/IRA_BookDown/Git_Book_1/_bookdown.yml",
+    "project_path" : "_bookdown.yml",
+    "properties" : {
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "yaml"
+}
