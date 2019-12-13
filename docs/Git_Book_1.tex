@@ -154,12 +154,47 @@ Remember each Rmd file contains one and only one chapter, and a chapter is defin
 
 To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): \url{https://yihui.name/tinytex/}.
 
-\hypertarget{intro}{%
-\chapter{Introduction}\label{intro}}
+\hypertarget{Preface}{%
+\chapter{Preface}\label{Preface}}
 
-On changera tout à partir d'ici !
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2);}\KeywordTok{library}\NormalTok{(knitr)}
+\end{Highlighting}
+\end{Shaded}
 
-You can label chapter and section titles using \texttt{\{\#label\}} after them, e.g., we can reference Chapter \ref{intro}. If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \ref{methods}.
+\hypertarget{to-do-list}{%
+\section{To Do List}\label{to-do-list}}
+
+\begin{itemize}
+\tightlist
+\item
+  Voir multioutput : pdf + html
+\item
+  Theme Tufte
+\item
+  Insert de Shiny
+\item
+  Faire un pdf: \texttt{Rscript\ -e\ "bookdown::render\_book(\textquotesingle{}index.Rmd\textquotesingle{},\ \textquotesingle{}bookdown::pdf\_book\textquotesingle{})"}
+\end{itemize}
+
+\hypertarget{a-mettre-en-place}{%
+\section{A mettre en place}\label{a-mettre-en-place}}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{fig\_aption=TRUE} dans le Yalm, mais où ?
+\item
+  \texttt{split\_by} split en plusieurs fichiers HTML (par \texttt{rmd}, \texttt{chapter} \texttt{section} \texttt{none} \texttt{chapter+number} \texttt{section+number})
+\item
+  \texttt{split\_bib=\ T\ or\ F} pour bib en fin de chaque page ou fin de doc
+\end{itemize}
+
+\hypertarget{rappels-dedition}{%
+\section{Rappels d'édition}\label{rappels-dedition}}
+
+You can label chapter and section titles using \texttt{\{\#label\}} after them, e.g., we can reference Chapter \ref{Preface}. If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \ref{RappelsProba}.
 
 Figures and tables with captions will be placed in \texttt{figure} and \texttt{table} environments, respectively.
 
@@ -225,12 +260,1760 @@ Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
 \end{tabular}
 \end{table}
 
-You can write citations, too. For example, we are using the \textbf{bookdown} package \citep{R-bookdown} in this sample book, which was built on top of R Markdown and \textbf{knitr} \citep{xie2015}.
+You can write citations, too. For example, we are using the \textbf{bookdown} package {[}R-bookdown{]} in this sample book, which was built on top of R Markdown and \textbf{knitr} {[}xie2015{]}.
 
-\hypertarget{literature}{%
-\chapter{Literature}\label{literature}}
+\hypertarget{premieres-operations-sous-r}{%
+\chapter{Premières opérations sous R}\label{premieres-operations-sous-r}}
 
-Here is a review of existing methods.
+\hypertarget{les-packages}{%
+\section{Les packages}\label{les-packages}}
+
+\textbf{Installation de packages}
+
+\texttt{R} a une configuration de base, qui peut être complétée par de nombreux packages ajoutant différentes fonctions.
+
+Les packages doivent être installés une première fois sur le pc avant de pouvoir être utilisés. \texttt{install.packages("pack")} téléchargera est installera le package \footnote{voir le fichier \texttt{install.packages.R} qui regroupe les packages utilisés pour ce cours et ceux conseillés.}.
+
+\textbf{Chargement de packages}
+
+Les packages installés sur une machine ne sont pas chargés en mémoire au démarrage. On charge les packages requis dans l'environnement \emph{R} par \texttt{library()} ou \texttt{require()}
+
+Les fonctions et les données contenus dans le package sont alors accessibles.
+
+\textbf{Updating de R et ses packages}
+
+Le package \texttt{installr}propose la fonction \texttt{updateR()}, qui met automatiquement à jour la version de \emph{R} et les packages.
+
+\hypertarget{working-directory-dossier-de-travail}{%
+\section{Working directory: dossier de travail}\label{working-directory-dossier-de-travail}}
+
+Sans précision particulière, les fichiers seront chargés et sauvegardés dans le \texttt{working\ directory} (wd): le dossier dans lequel \emph{R} va stocker et rechercher les fichiers. Les fonctions \texttt{getwd()} et \texttt{setwd()} permettent respectivement de voir le dossier de travail actuel et de le modifier.
+
+\textbf{Chemin d'accès sous *R*:}
+\emph{R} utilise un autre type d'écriture de chemin d'accès que celui de Windows (\texttt{"C:\textbackslash{}Dossier\textbackslash{}sous-dossier"}). Sous \emph{R}, il faut utiliser \texttt{"C:/Dossier/sous-dossier"} ou "\texttt{C:\textbackslash{}\textbackslash{}Dossier\textbackslash{}\textbackslash{}sous-dossier"}. Et sous Mac : \texttt{"/Users/Moi/Dossier/"}
+
+\hypertarget{codage-r}{%
+\section{Codage R:}\label{codage-r}}
+
+\textbf{Commandes et scripts}
+Le code \emph{R} peut être saisi directement dans la console ligne à ligne ou être sauvé comme un script: une succession de lignes de code. Un script peut être sauvegardé dans un fichier d'extension \texttt{.R}. Un script peut être exécuté de plusieurs façons:
+
+\begin{itemize}
+\tightlist
+\item
+  en gardant le curseur sur la ligne à exécuter et en cliquant sur le bouton \texttt{run} (ou avec le raccourcis clavier \texttt{CTRL+ENTREE}). Après éxecution, le curseur passe à la ligne suivante.\\
+\item
+  en sélectionnant la ou les lignes à exécuter et en cliquant sur \texttt{run} (ou \texttt{CTRL+ENTREE})\\
+\item
+  par la fonction \texttt{source("monscript.R")}.
+\end{itemize}
+
+Les commandes dans le script sont séparées soit par \texttt{;} soit par un retour à la ligne
+
+\textbf{R is case sensitive.} Majuscules et minuscules sont prises en compte dans les noms de fonctions, d'objets, etc.
+
+Le caratère \texttt{\#} précède des éléments de commentaires et ne sont pas exécutés.
+
+Certaines commandes s'étendent sur plusieurs lignes. On utilise \texttt{+} à la fin d'une ligne pour une commande multilignes.
+
+\textbf{Programme R: Objets}
+
+R stocke les données et les résultats dans des objets. On assigne et on stocke dans des objets avec l'opérateur \texttt{\textless{}-}.
+
+Pour afficher le contenu d'un objet, il suffit d'exécuter son nom.
+
+Pour afficher tous les objets de l'environnement (ou la mémoire de R) : \texttt{ls()}
+
+Par exemple:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# stocke 3 dans l'objet abc}
+\NormalTok{abc <-}\StringTok{ }\DecValTok{3}
+\CommentTok{# affiche le contenu de abc}
+\NormalTok{abc}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# affiche le contenu de l'environnement}
+\KeywordTok{ls}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "abc"
+\end{verbatim}
+
+\textbf{Programme R: Fonctions}
+
+Les fonctions sont essentielles pour le travail des données sous \emph{R}.
+
+Comme pour les fonctions mathématiques, les fonction R réalisent des opérations sur un \emph{input} et renvoient un \emph{output}.
+Par exemple, la fonction \texttt{mean(x)} prend le vecteur de nombres \texttt{x} et renvoie leur moyenne.
+Les inputs sont souvent appelés des arguments de la fonction.
+
+\textbf{Programme R: Aide de R}
+
+L'aide et la documentation des fonctions et des objets de \emph{R} sont accessibles par \texttt{?}
+
+Par exemple \texttt{?mean}
+
+\hypertarget{manipulation-des-objets-sous-r}{%
+\chapter{Manipulation des objets sous R}\label{manipulation-des-objets-sous-r}}
+
+\hypertarget{structures-de-donnees}{%
+\section{Structures de données}\label{structures-de-donnees}}
+
+Plusieurs types d'objets de \emph{R} peuvent contenir des données.
+
+\hypertarget{les-vecteurs}{%
+\section{Les Vecteurs}\label{les-vecteurs}}
+
+Les vecteurs sont unidimentionnels et homogènes.
+Une variable seule peut être représentée par un vecteur de l'un des types suivants:\\
+- \texttt{logical}: la variable prend les valeurs \texttt{TRUE} ou \texttt{FALSE} (1 ou 0)\\
+- \texttt{integer}: un entier uniquement (représenté par un nombre suivi de \texttt{L})\\
+- \texttt{numeric} ou \texttt{double}: un nombre réel\\
+- \texttt{character}: une chaine de caractères (du texte)
+
+Une valeur seule est un vecteur de longueur 1.
+
+\texttt{c()} est la fonction de concaténation. elle combine les valeurs de différents type en un vecteur.\\
+\texttt{typeof()} identifie le type du vecteur. \texttt{length()} renvoie la longueur du vecteur.
+
+Exemple:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mon_vec <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{mon_vec}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 3 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{typeof}\NormalTok{(mon_vec)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "double"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{char_vec <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"these"}\NormalTok{, }\StringTok{"are"}\NormalTok{, }\StringTok{"some"}\NormalTok{, }\StringTok{"words"}\NormalTok{)}
+\KeywordTok{length}\NormalTok{(char_vec)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\textbf{Répétition et séquence}\\
+\texttt{rep()} créé un vecteur en répétant les élements:\\
+\texttt{seq()} créé un vecteur en faisant une séquence d'éléments.\\
+L'expression \texttt{m:n} génère une séquence d'entiers de \texttt{m}à \texttt{n}\\
+Par exemple:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# répéter 3 fois 0}
+\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DataTypeTok{times=}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0 0 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# répéter 4 fois "abc"}
+\KeywordTok{rep}\NormalTok{(}\StringTok{"abc"}\NormalTok{, }\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "abc" "abc" "abc" "abc"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Séquence de 1 à 5 avec un pas de 2}
+\KeywordTok{seq}\NormalTok{(}\DataTypeTok{from=}\DecValTok{1}\NormalTok{, }\DataTypeTok{to=}\DecValTok{5}\NormalTok{, }\DataTypeTok{by=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 3 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Séquence de 10 à 0 avec un pas de -5}
+\KeywordTok{seq}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{-5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10  5  0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Séquence d'entiers de 3 à 7}
+\DecValTok{3}\OperatorTok{:}\DecValTok{7}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3 4 5 6 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Répétition de séquence:}
+\KeywordTok{rep}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{), }\DataTypeTok{times=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3 1 2 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Séquence de répétition}
+\KeywordTok{rep}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{), }\DataTypeTok{each=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 1 2 2 3 3
+\end{verbatim}
+
+\hypertarget{recyclage-vectoriel}{%
+\section{Recyclage vectoriel}\label{recyclage-vectoriel}}
+
+Lorsque des opérations sont réalisées sur deux vecteurs ou plus, dont les dimensions sont inégales, les valeurs du vecteur le plus court seront \emph{`recyclées'} pour compléter le vecteur jusqu'à obtenir la même dimension que le vecteur le plus long.
+
+Dans l'exemple ci-dessous, le vecteur \texttt{c(1)} de taille 1 est recyclé pour devenir \texttt{c(1,1,1)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{) }\OperatorTok{+}\StringTok{ }\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2 3 4
+\end{verbatim}
+
+Ici, le vecteur \texttt{c(1,2)} est recyclé deux fois pour devenir \texttt{c(1,2,1,2,1,2)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2 4 4 6 6 8
+\end{verbatim}
+
+\texttt{c(2)} devient \texttt{c(2,2,2)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{) }\OperatorTok{<}\StringTok{ }\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  TRUE FALSE FALSE
+\end{verbatim}
+
+Si le recyclage est partiel, on a le message
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in c(2, 3, 4) + c(10, 20): la taille d'un objet plus long n'est pas
+## multiple de la taille d'un objet plus court
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 12 23 14
+\end{verbatim}
+
+\hypertarget{selectionner-des-sous-ensembles-de-vecteur-avec}{%
+\section{\texorpdfstring{Sélectionner des sous-ensembles de vecteur avec \texttt{{[}{]}}}{Sélectionner des sous-ensembles de vecteur avec {[}{]}}}\label{selectionner-des-sous-ensembles-de-vecteur-avec}}
+
+Les éléments composant un vecteur peuvent être sélectionnés en spécifiant sa position dans le vecteur entre \texttt{{[}{]}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# créer un vecteur de 10 à 1}
+\NormalTok{a <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{1}\NormalTok{,}\OperatorTok{-}\DecValTok{1}\NormalTok{) ; a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 10  9  8  7  6  5  4  3  2  1
+\end{verbatim}
+
+Par exemple : Sélectionner le 2ème élément
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a[}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 9
+\end{verbatim}
+
+Sélectionner les 5 premiers éléments
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a[}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10  9  8  7  6
+\end{verbatim}
+
+Sélection des premier, troisième et quatrième éléments:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a[}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10  8  7
+\end{verbatim}
+
+Les éléments peuvent être nommés, et appelés par leur nom.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{scores <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DataTypeTok{John=}\DecValTok{25}\NormalTok{, }\DataTypeTok{Marge=}\DecValTok{34}\NormalTok{, }\DataTypeTok{Dan=}\DecValTok{24}\NormalTok{, }\DataTypeTok{Emily=}\DecValTok{29}\NormalTok{)}
+\NormalTok{scores[}\KeywordTok{c}\NormalTok{(}\StringTok{"John"}\NormalTok{, }\StringTok{"Emily"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  John Emily 
+##    25    29
+\end{verbatim}
+
+\hypertarget{selection-conditionnelle---sous-ensemble-conditionne}{%
+\section{Sélection conditionnelle - sous ensemble conditionné}\label{selection-conditionnelle---sous-ensemble-conditionne}}
+
+Le \emph{subsetting} logique peut être fait avec un vecteur \texttt{(TRUE/FALSE)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{scores[}\KeywordTok{c}\NormalTok{(}\OtherTok{FALSE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Marge   Dan 
+##    34    24
+\end{verbatim}
+
+Il peut aussi être fait avec une condition
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{scores[scores}\OperatorTok{<}\DecValTok{30}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  John   Dan Emily 
+##    25    24    29
+\end{verbatim}
+
+\hypertarget{listes}{%
+\section{Listes}\label{listes}}
+
+Les listes sont des éléments uni-dimensionnels, mais dont les éléments peuvent être de types différents : des vecteurs (de toute dimension), des listes, des matrices, des dataframes.
+
+\textbf{Génération de liste par `list()`}
+Une liste composée d'un vecteur, d'un vecteur d'entiers et un vecteur de caractères.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mylist <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\FloatTok{1.1}\NormalTok{, }\KeywordTok{c}\NormalTok{(1L,3L,7L), }\KeywordTok{c}\NormalTok{(}\StringTok{"abc"}\NormalTok{, }\StringTok{"def"}\NormalTok{))}
+\NormalTok{mylist}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 1.1
+## 
+## [[2]]
+## [1] 1 3 7
+## 
+## [[3]]
+## [1] "abc" "def"
+\end{verbatim}
+
+Les éléments peuvent être nommés
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mary_info <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{classes=}\KeywordTok{c}\NormalTok{(}\StringTok{"Biology"}\NormalTok{, }\StringTok{"Math"}\NormalTok{, }\StringTok{"Music"}\NormalTok{,}
+                            \StringTok{"Physics"}\NormalTok{),}
+                  \DataTypeTok{friends=}\KeywordTok{c}\NormalTok{(}\StringTok{"John"}\NormalTok{, }\StringTok{"Dan"}\NormalTok{, }\StringTok{"Emily"}\NormalTok{),}
+                  \DataTypeTok{SAT=}\DecValTok{1450}\NormalTok{)}
+\NormalTok{mary_info}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $classes
+## [1] "Biology" "Math"    "Music"   "Physics"
+## 
+## $friends
+## [1] "John"  "Dan"   "Emily"
+## 
+## $SAT
+## [1] 1450
+\end{verbatim}
+
+\textbf{Accès aux éléments de listes}
+
+Comme précédemment, l'accès aux composants d'une liste se fait soit par \texttt{{[}{[}{]}{]}} pour accèder avec la position, soit avec \texttt{\$} pour accèder avec le nom.
+
+Par la position
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mary_info[[}\DecValTok{2}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "John"  "Dan"   "Emily"
+\end{verbatim}
+
+Par le nom
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mary_info}\OperatorTok{$}\NormalTok{SAT}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1450
+\end{verbatim}
+
+Le second élément du vecteur \texttt{friend}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mary_info}\OperatorTok{$}\NormalTok{friends[}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Dan"
+\end{verbatim}
+
+\hypertarget{matrices}{%
+\section{Matrices}\label{matrices}}
+
+Les matrices sont des structures de données à deux dimensions et homogènes.
+
+\textbf{Créer une matrice `matrix()`}
+
+L'input de \texttt{matrix()} est un vecteur qui est transformé en une matrice en 2 dimensions, selon les spécifications \texttt{nrow} et \texttt{ncol}.
+
+Par défaut, la matrice est remplie colonne par colonne, cela est modifié par \texttt{byrow=T}
+
+Par exemple: une matrice 2lx3c, remplie par colonne:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# on remplit les colonnes avec le vecteur de 1 à 6 sur 2 lignes}
+\NormalTok{a <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{6}\NormalTok{, }\DataTypeTok{nrow=}\DecValTok{2}\NormalTok{)}
+\NormalTok{a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6
+\end{verbatim}
+
+Remplissage par ligne
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{5}\OperatorTok{:}\DecValTok{14}\NormalTok{, }\DataTypeTok{nrow=}\DecValTok{2}\NormalTok{, }\DataTypeTok{byrow=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    5    6    7    8    9
+## [2,]   10   11   12   13   14
+\end{verbatim}
+
+\textbf{Accès aux éléments d'une matrice - `[row,column]`}
+
+L'omission de \texttt{row} correspond à la sélection de toutes les lignes. L'omission de \texttt{column} sélectionne toutes les colonnes.
+
+Sélection de la ligne 2, colonne 3
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a[}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6
+\end{verbatim}
+
+Toutes les lignes de la colonne 2
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b[,}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  6 11
+\end{verbatim}
+
+Toutes les colonnes de la ligne 1
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a[}\DecValTok{1}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 3 5
+\end{verbatim}
+
+\hypertarget{dataframe}{%
+\section{Dataframe}\label{dataframe}}
+
+Les données de l'analyse statistique sont typiquement stockées dans des \texttt{dataframe}.
+
+Elles combinent les possibilités des matrices et des listes.
+
+Comme pour les matrices, les \texttt{dataframe} sont rectangulaires, les colonnes sont les variables et les lignes sont les observations de ces variables.
+Comme les listes, les \texttt{dataframe} peuvent avoir des éléments (les colonnes) de différents types (numérique, caractère, facteurs, logique,etc.)
+
+Mais les éléments d'un \texttt{dataframe} doivent être de longueur égale.
+
+\textbf{Créer un dataframe avec `data.frame()`}
+
+La syntaxe est la même que pour \texttt{list()}, mais les éléments doivent être de même longueur.
+Les éléments peuvent être nommés.
+
+Par exemple, un vecteur logique et un vecteur numérique
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{diabetic =} \KeywordTok{c}\NormalTok{(}\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{), }
+                     \DataTypeTok{height =} \KeywordTok{c}\NormalTok{(}\DecValTok{65}\NormalTok{, }\DecValTok{69}\NormalTok{, }\DecValTok{71}\NormalTok{, }\DecValTok{73}\NormalTok{))}
+\NormalTok{mydata}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   diabetic height
+## 1     TRUE     65
+## 2    FALSE     69
+## 3     TRUE     71
+## 4    FALSE     73
+\end{verbatim}
+
+\textbf{Sous ensemble de dataframes}
+
+Comme pour les matrices et les listes, les sélections sont faites avec\texttt{{[}rows,\ columns{]}} ou avec le nom de la variable.
+
+Par exemple
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata[}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 71
+\end{verbatim}
+
+Ou
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata[}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\StringTok{"height"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 65 69
+\end{verbatim}
+
+Ou
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata[,}\StringTok{"diabetic"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  TRUE FALSE  TRUE FALSE
+\end{verbatim}
+
+\textbackslash textbf\{Accéder aux variables ou colonnes par le nom ou \texttt{\$}\}
+Par exemple
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata}\OperatorTok{$}\NormalTok{height[}\DecValTok{2}\OperatorTok{:}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 69 71
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata[[}\StringTok{"height"}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 65 69 71 73
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata[[}\StringTok{"height"}\NormalTok{]][}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 69
+\end{verbatim}
+
+\textbf{Nommer les variables d'un dataframe}
+
+\texttt{colnames(data\_frame)} renvoie les noms des colonnes d'une dataframe (ou d'une matrice).\\
+\texttt{colnames(data\_frame)\ \textless{}-\ c("some",\ "names")} assigne des noms aux colonnes.\\
+Par exemple
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colnames}\NormalTok{(mydata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "diabetic" "height"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colnames}\NormalTok{(mydata) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Diabetic"}\NormalTok{, }\StringTok{"Height"}\NormalTok{)}
+\KeywordTok{colnames}\NormalTok{(mydata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Diabetic" "Height"
+\end{verbatim}
+
+Pour changer le nom d'une variable:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colnames}\NormalTok{(mydata)[}\DecValTok{1}\NormalTok{] <-}\StringTok{ "Diabetes"}
+\KeywordTok{colnames}\NormalTok{(mydata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Diabetes" "Height"
+\end{verbatim}
+
+Enfin on peut \emph{``copier/coller''} une variable sous condition :
+
+\texttt{dat{[}dat\$Subject==\textquotesingle{}s2\textquotesingle{},{]}\$RT\ \textless{}-\ dat{[}dat\$Subject==\textquotesingle{}s2\textquotesingle{},{]}\$Trial}
+
+\textbf{Examiner la structure d'un objet}
+
+Pour les objets à 2 dimensions \texttt{dim()} renvoie le nombre de lignes et de colonnes.
+
+On utilise \texttt{str()} pour connaître la structure d'un objet et le type de ses éléments.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{dim}\NormalTok{(mydata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str}\NormalTok{(mydata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    4 obs. of  2 variables:
+##  $ Diabetes: logi  TRUE FALSE TRUE FALSE
+##  $ Height  : num  65 69 71 73
+\end{verbatim}
+
+\hypertarget{chargement-de-donnees-sous-r}{%
+\chapter{Chargement de données sous R}\label{chargement-de-donnees-sous-r}}
+
+\hypertarget{manipulation-de-donnees}{%
+\section{Manipulation de données}\label{manipulation-de-donnees}}
+
+\textbf{Chargement de données sous R}
+
+Débutant avec \emph{R}, il peut sembler efficace de manipuler les données avec un logiciel familier tel que \emph{MS Excel}, pour corriger les erreurs, ajouter quelques informations ou faire quelques calculs simples.
+
+Pourtant, le travail sous \emph{R} est encouragé ici, pour 100\% des opérations sur les données !
+
+Quelques arguments:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{MS Excel} charge les données réelles, ce qui signifie que les modifications sont sauvegardées dans le fichier de données même. De plus, aucun historique des manipulations n'est sauvegardé, il est donc difficile, voire impossible, de conserver une trace des changements. \emph{Au contraire, R}, charge une copie des données dans sa mémoire et n'altère pas directement les données. Il permet de fonctionner avec des scripts, qui listent les manipulations appliquées aux données, les rendant ainsi \textbf{reproductibles} et \textbf{transparentes}.\\
+\item
+  Travailler directement sur les données peut produire des erreurs qui sont alors difficiles à identifier et à corriger. Avec \emph{R} il est facile de détecter les erreurs et problèmes systématiques à partir de petits programmes.\\
+\item
+  Différents formats de données peuvent être chargés avec \emph{R}, notamment les formats de logiciels spécialisés tels que SAS, Spss, Stata, etc.
+\end{itemize}
+
+\textbf{Formats de données - exemples}
+
+\textbf{Dataframe}
+Une base de données sous \emph{R} est appelée une \texttt{dataframe}, équivalent à une matrice de données où les lignes sont indéxées par leur numéro et les colonnes par des noms de variables.
+Les bases de données d'autres formats (par ex. ceux d'autres logiciels) peuvent être importées (ou chargées) sous \emph{R}.
+
+\textbf{Formats de données R}\\
+Les fichiers \texttt{.Rdata} ou \texttt{.rda} contiennent un ou plusieurs objets \texttt{R} (dataframes, fonctions, shapefiles, etc.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Chargement d'un fichier (fictif) de données dans R: }
+\KeywordTok{load}\NormalTok{(}\StringTok{'DATA}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Movie.Data.Clean.RData'}\NormalTok{)}
+\CommentTok{# utiliser ls() pour lister les objets de l'environnement}
+\KeywordTok{ls}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "a"          "abc"        "b"          "char_vec"   "mary_info" 
+##  [6] "mon_vec"    "Movie.Data" "mydata"     "mylist"     "scores"
+\end{verbatim}
+
+Les fichiers \texttt{.rds} contiennent un objet \emph{R} sans nom. Cet objet est donc stocké dans une seule variable. \texttt{readRDS(\textquotesingle{}file.rds\textquotesingle{})} permet de charger un tel fichier et \texttt{str(newdat)}de savoir quels objets sont dans l'objet chargé.
+
+\textbf{Les fichers texte}
+
+Les fichiers \texttt{.txt}ou \texttt{.csv} sont des fichiers de données brutes, sans mise en forme des données (par exemple format de date).
+
+Dans un fichier texte, une ligne correspond à une observation (une ligne du dataframe). Sur la ligne, les valeurs des différentes colonnes sont séparées par un caractère séparateur (souvent le \texttt{;} ou la tabulation).
+
+\texttt{read.table(\textquotesingle{}file.txt\textquotesingle{},\ header=TRUE)} permet de charger un fichier texte où la 1ère ligne contient les noms de variables.
+
+\emph{Problèmes classiques de lecture des fichiers textes}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \emph{R} ne trouve pas le fichier que vous voulez charger:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Vérifiez votre working directory (dossier de travail) \texttt{getwd()}. Ce dossier contient-il le fichier que vous voulez charger ? Modifiez ce dossier avec \texttt{setwd()}.\\
+\item
+  Parfois il est utile de préciser tout le chemin d'accès dans le nom du fichier à charger. Par exemple: \texttt{"C://Documents//data.txt"} sous Windows ou sous Mac \texttt{"/Users/Moi/Documents/data.txt"}.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  \texttt{Incorrect\ delimiter}. Aucun message d'erreur n'est affiché, mais les données paraissent étranges. Le séparateur de variable est mal spécifié. Excel utilise souvent la \texttt{,} alors que d'autres logiciels utilisent l'espace ou la tabulation.
+  \texttt{dat\ \textless{}-\ read.table("file.csv",\ header=TRUE,\ sep=\textquotesingle{},\textquotesingle{})}permet de préciser le séparateur.
+\item
+  \emph{Décimale}. Les données issues de locigiels anglosaxons utilisent le \texttt{.} pour indiquer les décimales, plutôt que la \texttt{,}. Cela peut être précisé avec: \texttt{dat\ \textless{}-\ read.table("file.csv",\ header=TRUE,\ sep=\textquotesingle{},\textquotesingle{},\ dec=\textquotesingle{}.\textquotesingle{})}
+\end{enumerate}
+
+Cependant, le \texttt{.} est aussi parfois utilisé pour séparer les milliers. C'est alors à l'exportation des données que l'on doit s'assurer du caractère des décimales et qu'il n'y a pas de caractère pour les milliers.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  \emph{Erreurs sur les variables}. Dans certains cas, le problème d'importation affecte une ou plusieurs variables.
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Une chaine de caractère est reconnue comme un facteur : \texttt{as.character(data\$V1)} pour convertir une variable en caractère.
+\item
+  Dans un champs de caractère, le \texttt{.} est utilisé pour les milliers, alors que la \texttt{,}marque les décimales. \texttt{gsub("\textbackslash{}\textbackslash{}.",\ "",\ data\$V1)}supprime les \texttt{.} dans le champs de valeurs.
+\item
+  La \texttt{,}marque les décimales au lieu du \texttt{.}: \texttt{gsub("\textbackslash{}\textbackslash{},",\ "\textbackslash{}\textbackslash{}.",\ data\$V1)} : remplace les \texttt{,} par un \texttt{.}
+\item
+  pour convertir une chaine de caractères en numérique: \texttt{as.numeric(data\$V1)}
+\end{itemize}
+
+Par exemple:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"file.txt"}\NormalTok{, }\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{stringsAsFactors=}\OtherTok{FALSE}\NormalTok{)}
+\NormalTok{data}\OperatorTok{$}\NormalTok{V1 <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{gsub}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{,"}\NormalTok{, }\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{."}\NormalTok{, }\KeywordTok{gsub}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{."}\NormalTok{, }\StringTok{""}\NormalTok{, data}\OperatorTok{$}\NormalTok{V1)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\item
+  les valeurs manquantes sont indiquées par \texttt{.}au lieu d'un vide: \texttt{NA}:\\
+  \texttt{read.table("file.txt",\ header=TRUE,\ na.strings=\textquotesingle{}.\textquotesingle{})} précise le codage des vides. Si deux codages existent dans le fichier des \texttt{.} et les caractères \emph{NA} :
+  \texttt{read.table("file.txt",\ header=TRUE,\ na.strings=c(\textquotesingle{}.\textquotesingle{},\ NA))}
+\item
+  \emph{Nom de colonne manquant}:\\
+  R considère qu'une colonne sans nom contient les noms de lignes.\texttt{read.table("file.csv",\ header=TRUE,\ row.names=NULL)} force la colonne sans nom à être prise comme une variable.
+\item
+  \emph{Lignes de longueur différente}:\\
+  Si des lignes ont des longueurs différentes, \emph{R} ne retrouve pas toutes les variables. Il faut le forcer par :\texttt{read.table("file.csv",\ header=TRUE,\ fill=TRUE)}
+\item
+  \emph{drop des premières lignes}:\\
+  On peut commencer la lecture du fichier au numéro de ligne souhaité: \texttt{read.table("file.csv",\ header=TRUE,\ skip=4)}: pour commencer à la ligne 5.
+\end{enumerate}
+
+Recommendations de lecture:\\
+- \url{https://stats.idre.ucla.edu/stat/data/intro_r/intro_r_flat.html}
+
+\hypertarget{les-packages-1}{%
+\section{Les packages}\label{les-packages-1}}
+
+\textbf{Installation de packages}
+
+\texttt{R} a une configuration de base, qui peut être complétée par de nombreux packages ajoutant différentes fonctions.
+
+Les packages doivent être installés une première fois sur le pc avant de pouvoir être utilisés. \texttt{install.packages("pack")} téléchargera est installera le package \footnote{voir le fichier \texttt{install.packages.R} qui regroupe les packages utilisés pour ce cours et ceux conseillés.}.
+
+\textbf{Chargement de packages}
+
+Les packages installés sur une machine ne sont pas chargés en mémoire au démarrage. On charge les packages requis dans l'environnement \emph{R} par \texttt{library()} ou \texttt{require()}
+
+Les fonctions et les données contenus dans le package sont alors accessibles.
+
+\textbf{Updating de R et ses packages}
+
+Le package \texttt{installr}propose la fonction \texttt{updateR()}, qui met automatiquement à jour la version de \emph{R} et les packages.
+
+\hypertarget{working-directory-dossier-de-travail-1}{%
+\section{Working directory: dossier de travail}\label{working-directory-dossier-de-travail-1}}
+
+Sans précision particulière, les fichiers seront chargés et sauvegardés dans le \texttt{working\ directory} (wd): le dossier dans lequel \emph{R} va stocker et rechercher les fichiers. Les fonctions \texttt{getwd()} et \texttt{setwd()} permettent respectivement de voir le dossier de travail actuel et de le modifier.
+
+\textbf{Chemin d'accès sous *R*:}
+\emph{R} utilise un autre type d'écriture de chemin d'accès que celui de Windows (\texttt{"C:\textbackslash{}Dossier\textbackslash{}sous-dossier"}). Sous \emph{R}, il faut utiliser \texttt{"C:/Dossier/sous-dossier"} ou "\texttt{C:\textbackslash{}\textbackslash{}Dossier\textbackslash{}\textbackslash{}sous-dossier"}. Et sous Mac : \texttt{"/Users/Moi/Dossier/"}
+
+\hypertarget{codage-r-1}{%
+\section{Codage R:}\label{codage-r-1}}
+
+\textbf{Commandes et scripts}
+Le code \emph{R} peut être saisi directement dans la console ligne à ligne ou être sauvé comme un script: une succession de lignes de code. Un script peut être sauvegardé dans un fichier d'extension \texttt{.R}. Un script peut être exécuté de plusieurs façons:
+
+\begin{itemize}
+\tightlist
+\item
+  en gardant le curseur sur la ligne à exécuter et en cliquant sur le bouton \texttt{run} (ou avec le raccourcis clavier \texttt{CTRL+ENTREE}). Après éxecution, le curseur passe à la ligne suivante.\\
+\item
+  en sélectionnant la ou les lignes à exécuter et en cliquant sur \texttt{run} (ou \texttt{CTRL+ENTREE})\\
+\item
+  par la fonction \texttt{source("monscript.R")}.
+\end{itemize}
+
+Les commandes dans le script sont séparées soit par \texttt{;} soit par un retour à la ligne
+
+\textbf{R is case sensitive.} Majuscules et minuscules sont prises en compte dans les noms de fonctions, d'objets, etc.
+
+Le caratère \texttt{\#} précède des éléments de commentaires et ne sont pas exécutés.
+
+Certaines commandes s'étendent sur plusieurs lignes. On utilise \texttt{+} à la fin d'une ligne pour une commande multilignes.
+
+\textbf{Programme R: Objets}
+
+R stocke les données et les résultats dans des objets. On assigne et on stocke dans des objets avec l'opérateur \texttt{\textless{}-}.
+
+Pour afficher le contenu d'un objet, il suffit d'exécuter son nom.
+
+Pour afficher tous les objets de l'environnement (ou la mémoire de R) : \texttt{ls()}
+
+Par exemple:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# stocke 3 dans l'objet abc}
+\NormalTok{abc <-}\StringTok{ }\DecValTok{3}
+\CommentTok{# affiche le contenu de abc}
+\NormalTok{abc}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# affiche le contenu de l'environnement}
+\KeywordTok{ls}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "a"          "abc"        "b"          "char_vec"   "mary_info" 
+##  [6] "mon_vec"    "Movie.Data" "mydata"     "mylist"     "scores"
+\end{verbatim}
+
+\textbf{Programme R: Fonctions}
+
+Les fonctions sont essentielles pour le travail des données sous \emph{R}.
+
+Comme pour les fonctions mathématiques, les fonction R réalisent des opérations sur un \emph{input} et renvoient un \emph{output}.
+Par exemple, la fonction \texttt{mean(x)} prend le vecteur de nombres \texttt{x} et renvoie leur moyenne.
+Les inputs sont souvent appelés des arguments de la fonction.
+
+\textbf{Programme R: Aide de R}
+
+L'aide et la documentation des fonctions et des objets de \emph{R} sont accessibles par \texttt{?}
+
+Par exemple \texttt{?mean}
+
+\hypertarget{structures-de-donnees-1}{%
+\section{Structures de données}\label{structures-de-donnees-1}}
+
+Plusieurs types d'objets de \emph{R} peuvent contenir des données.
+
+\hypertarget{les-vecteurs-1}{%
+\section{Les Vecteurs}\label{les-vecteurs-1}}
+
+Les vecteurs sont unidimentionnels et homogènes.
+Une variable seule peut être représentée par un vecteur de l'un des types suivants:\\
+- \texttt{logical}: la variable prend les valeurs \texttt{TRUE} ou \texttt{FALSE} (1 ou 0)\\
+- \texttt{integer}: un entier uniquement (représenté par un nombre suivi de \texttt{L})\\
+- \texttt{numeric} ou \texttt{double}: un nombre réel\\
+- \texttt{character}: une chaine de caractères (du texte)
+
+Une valeur seule est un vecteur de longueur 1.
+
+\texttt{c()} est la fonction de concaténation. elle combine les valeurs de différents type en un vecteur.\\
+\texttt{typeof()} identifie le type du vecteur. \texttt{length()} renvoie la longueur du vecteur.
+
+Exemple:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mon_vec <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{mon_vec}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 3 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{typeof}\NormalTok{(mon_vec)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "double"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{char_vec <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"these"}\NormalTok{, }\StringTok{"are"}\NormalTok{, }\StringTok{"some"}\NormalTok{, }\StringTok{"words"}\NormalTok{)}
+\KeywordTok{length}\NormalTok{(char_vec)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\textbf{Répétition et séquence}\\
+\texttt{rep()} créé un vecteur en répétant les élements:\\
+\texttt{seq()} créé un vecteur en faisant une séquence d'éléments.\\
+L'expression \texttt{m:n} génère une séquence d'entiers de \texttt{m}à \texttt{n}\\
+Par exemple:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# répéter 3 fois 0}
+\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DataTypeTok{times=}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0 0 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# répéter 4 fois "abc"}
+\KeywordTok{rep}\NormalTok{(}\StringTok{"abc"}\NormalTok{, }\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "abc" "abc" "abc" "abc"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Séquence de 1 à 5 avec un pas de 2}
+\KeywordTok{seq}\NormalTok{(}\DataTypeTok{from=}\DecValTok{1}\NormalTok{, }\DataTypeTok{to=}\DecValTok{5}\NormalTok{, }\DataTypeTok{by=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 3 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Séquence de 10 à 0 avec un pas de -5}
+\KeywordTok{seq}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{-5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10  5  0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Séquence d'entiers de 3 à 7}
+\DecValTok{3}\OperatorTok{:}\DecValTok{7}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3 4 5 6 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Répétition de séquence:}
+\KeywordTok{rep}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{), }\DataTypeTok{times=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3 1 2 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Séquence de répétition}
+\KeywordTok{rep}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{), }\DataTypeTok{each=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 1 2 2 3 3
+\end{verbatim}
+
+\hypertarget{recyclage-vectoriel-1}{%
+\section{Recyclage vectoriel}\label{recyclage-vectoriel-1}}
+
+Lorsque des opérations sont réalisées sur deux vecteurs ou plus, dont les dimensions sont inégales, les valeurs du vecteur le plus court seront \emph{`recyclées'} pour compléter le vecteur jusqu'à obtenir la même dimension que le vecteur le plus long.
+
+Dans l'exemple ci-dessous, le vecteur \texttt{c(1)} de taille 1 est recyclé pour devenir \texttt{c(1,1,1)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{) }\OperatorTok{+}\StringTok{ }\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2 3 4
+\end{verbatim}
+
+Ici, le vecteur \texttt{c(1,2)} est recyclé deux fois pour devenir \texttt{c(1,2,1,2,1,2)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2 4 4 6 6 8
+\end{verbatim}
+
+\texttt{c(2)} devient \texttt{c(2,2,2)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{) }\OperatorTok{<}\StringTok{ }\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  TRUE FALSE FALSE
+\end{verbatim}
+
+Si le recyclage est partiel, on a le message
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in c(2, 3, 4) + c(10, 20): la taille d'un objet plus long n'est pas
+## multiple de la taille d'un objet plus court
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 12 23 14
+\end{verbatim}
+
+\hypertarget{selectionner-des-sous-ensembles-de-vecteur-avec-1}{%
+\section{\texorpdfstring{Sélectionner des sous-ensembles de vecteur avec \texttt{{[}{]}}}{Sélectionner des sous-ensembles de vecteur avec {[}{]}}}\label{selectionner-des-sous-ensembles-de-vecteur-avec-1}}
+
+Les éléments composant un vecteur peuvent être sélectionnés en spécifiant sa position dans le vecteur entre \texttt{{[}{]}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# créer un vecteur de 10 à 1}
+\NormalTok{a <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{1}\NormalTok{,}\OperatorTok{-}\DecValTok{1}\NormalTok{) ; a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 10  9  8  7  6  5  4  3  2  1
+\end{verbatim}
+
+Par exemple : Sélectionner le 2ème élément
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a[}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 9
+\end{verbatim}
+
+Sélectionner les 5 premiers éléments
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a[}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10  9  8  7  6
+\end{verbatim}
+
+Sélection des premier, troisième et quatrième éléments:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a[}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10  8  7
+\end{verbatim}
+
+Les éléments peuvent être nommés, et appelés par leur nom.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{scores <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DataTypeTok{John=}\DecValTok{25}\NormalTok{, }\DataTypeTok{Marge=}\DecValTok{34}\NormalTok{, }\DataTypeTok{Dan=}\DecValTok{24}\NormalTok{, }\DataTypeTok{Emily=}\DecValTok{29}\NormalTok{)}
+\NormalTok{scores[}\KeywordTok{c}\NormalTok{(}\StringTok{"John"}\NormalTok{, }\StringTok{"Emily"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  John Emily 
+##    25    29
+\end{verbatim}
+
+\hypertarget{selection-conditionnelle---sous-ensemble-conditionne-1}{%
+\section{Sélection conditionnelle - sous ensemble conditionné}\label{selection-conditionnelle---sous-ensemble-conditionne-1}}
+
+Le \emph{subsetting} logique peut être fait avec un vecteur \texttt{(TRUE/FALSE)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{scores[}\KeywordTok{c}\NormalTok{(}\OtherTok{FALSE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Marge   Dan 
+##    34    24
+\end{verbatim}
+
+Il peut aussi être fait avec une condition
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{scores[scores}\OperatorTok{<}\DecValTok{30}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  John   Dan Emily 
+##    25    24    29
+\end{verbatim}
+
+\hypertarget{listes-1}{%
+\section{Listes}\label{listes-1}}
+
+Les listes sont des éléments uni-dimensionnels, mais dont les éléments peuvent être de types différents : des vecteurs (de toute dimension), des listes, des matrices, des dataframes.
+
+\textbf{Génération de liste par `list()`}
+Une liste composée d'un vecteur, d'un vecteur d'entiers et un vecteur de caractères.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mylist <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\FloatTok{1.1}\NormalTok{, }\KeywordTok{c}\NormalTok{(1L,3L,7L), }\KeywordTok{c}\NormalTok{(}\StringTok{"abc"}\NormalTok{, }\StringTok{"def"}\NormalTok{))}
+\NormalTok{mylist}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 1.1
+## 
+## [[2]]
+## [1] 1 3 7
+## 
+## [[3]]
+## [1] "abc" "def"
+\end{verbatim}
+
+Les éléments peuvent être nommés
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mary_info <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{classes=}\KeywordTok{c}\NormalTok{(}\StringTok{"Biology"}\NormalTok{, }\StringTok{"Math"}\NormalTok{, }\StringTok{"Music"}\NormalTok{,}
+                            \StringTok{"Physics"}\NormalTok{),}
+                  \DataTypeTok{friends=}\KeywordTok{c}\NormalTok{(}\StringTok{"John"}\NormalTok{, }\StringTok{"Dan"}\NormalTok{, }\StringTok{"Emily"}\NormalTok{),}
+                  \DataTypeTok{SAT=}\DecValTok{1450}\NormalTok{)}
+\NormalTok{mary_info}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $classes
+## [1] "Biology" "Math"    "Music"   "Physics"
+## 
+## $friends
+## [1] "John"  "Dan"   "Emily"
+## 
+## $SAT
+## [1] 1450
+\end{verbatim}
+
+\textbf{Accès aux éléments de listes}
+
+Comme précédemment, l'accès aux composants d'une liste se fait soit par \texttt{{[}{[}{]}{]}} pour accèder avec la position, soit avec \texttt{\$} pour accèder avec le nom.
+
+Par la position
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mary_info[[}\DecValTok{2}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "John"  "Dan"   "Emily"
+\end{verbatim}
+
+Par le nom
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mary_info}\OperatorTok{$}\NormalTok{SAT}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1450
+\end{verbatim}
+
+Le second élément du vecteur \texttt{friend}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mary_info}\OperatorTok{$}\NormalTok{friends[}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Dan"
+\end{verbatim}
+
+\hypertarget{matrices-1}{%
+\section{Matrices}\label{matrices-1}}
+
+Les matrices sont des structures de données à deux dimensions et homogènes.
+
+\textbf{Créer une matrice `matrix()`}
+
+L'input de \texttt{matrix()} est un vecteur qui est transformé en une matrice en 2 dimensions, selon les spécifications \texttt{nrow} et \texttt{ncol}.
+
+Par défaut, la matrice est remplie colonne par colonne, cela est modifié par \texttt{byrow=T}
+
+Par exemple: une matrice 2lx3c, remplie par colonne:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# on remplit les colonnes avec le vecteur de 1 à 6 sur 2 lignes}
+\NormalTok{a <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{6}\NormalTok{, }\DataTypeTok{nrow=}\DecValTok{2}\NormalTok{)}
+\NormalTok{a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6
+\end{verbatim}
+
+Remplissage par ligne
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{5}\OperatorTok{:}\DecValTok{14}\NormalTok{, }\DataTypeTok{nrow=}\DecValTok{2}\NormalTok{, }\DataTypeTok{byrow=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    5    6    7    8    9
+## [2,]   10   11   12   13   14
+\end{verbatim}
+
+\textbf{Accès aux éléments d'une matrice - `[row,column]`}
+
+L'omission de \texttt{row} correspond à la sélection de toutes les lignes. L'omission de \texttt{column} sélectionne toutes les colonnes.
+
+Sélection de la ligne 2, colonne 3
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a[}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6
+\end{verbatim}
+
+Toutes les lignes de la colonne 2
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b[,}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  6 11
+\end{verbatim}
+
+Toutes les colonnes de la ligne 1
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a[}\DecValTok{1}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 3 5
+\end{verbatim}
+
+\hypertarget{dataframe-1}{%
+\section{Dataframe}\label{dataframe-1}}
+
+Les données de l'analyse statistique sont typiquement stockées dans des \texttt{dataframe}.
+
+Elles combinent les possibilités des matrices et des listes.
+
+Comme pour les matrices, les \texttt{dataframe} sont rectangulaires, les colonnes sont les variables et les lignes sont les observations de ces variables.
+Comme les listes, les \texttt{dataframe} peuvent avoir des éléments (les colonnes) de différents types (numérique, caractère, facteurs, logique,etc.)
+
+Mais les éléments d'un \texttt{dataframe} doivent être de longueur égale.
+
+\textbf{Créer un dataframe avec `data.frame()`}
+
+La syntaxe est la même que pour \texttt{list()}, mais les éléments doivent être de même longueur.
+Les éléments peuvent être nommés.
+
+Par exemple, un vecteur logique et un vecteur numérique
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{diabetic =} \KeywordTok{c}\NormalTok{(}\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{), }
+                     \DataTypeTok{height =} \KeywordTok{c}\NormalTok{(}\DecValTok{65}\NormalTok{, }\DecValTok{69}\NormalTok{, }\DecValTok{71}\NormalTok{, }\DecValTok{73}\NormalTok{))}
+\NormalTok{mydata}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   diabetic height
+## 1     TRUE     65
+## 2    FALSE     69
+## 3     TRUE     71
+## 4    FALSE     73
+\end{verbatim}
+
+\textbf{Sous ensemble de dataframes}
+
+Comme pour les matrices et les listes, les sélections sont faites avec\texttt{{[}rows,\ columns{]}} ou avec le nom de la variable.
+
+Par exemple
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata[}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 71
+\end{verbatim}
+
+Ou
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata[}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\StringTok{"height"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 65 69
+\end{verbatim}
+
+Ou
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata[,}\StringTok{"diabetic"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  TRUE FALSE  TRUE FALSE
+\end{verbatim}
+
+\textbackslash textbf\{Accéder aux variables ou colonnes par le nom ou \texttt{\$}\}
+Par exemple
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata}\OperatorTok{$}\NormalTok{height[}\DecValTok{2}\OperatorTok{:}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 69 71
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata[[}\StringTok{"height"}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 65 69 71 73
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata[[}\StringTok{"height"}\NormalTok{]][}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 69
+\end{verbatim}
+
+\textbf{Nommer les variables d'un dataframe}
+
+\texttt{colnames(data\_frame)} renvoie les noms des colonnes d'une dataframe (ou d'une matrice).\\
+\texttt{colnames(data\_frame)\ \textless{}-\ c("some",\ "names")} assigne des noms aux colonnes.\\
+Par exemple
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colnames}\NormalTok{(mydata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "diabetic" "height"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colnames}\NormalTok{(mydata) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Diabetic"}\NormalTok{, }\StringTok{"Height"}\NormalTok{)}
+\KeywordTok{colnames}\NormalTok{(mydata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Diabetic" "Height"
+\end{verbatim}
+
+Pour changer le nom d'une variable:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colnames}\NormalTok{(mydata)[}\DecValTok{1}\NormalTok{] <-}\StringTok{ "Diabetes"}
+\KeywordTok{colnames}\NormalTok{(mydata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Diabetes" "Height"
+\end{verbatim}
+
+Enfin on peut \emph{``copier/coller''} une variable sous condition :
+
+\texttt{dat{[}dat\$Subject==\textquotesingle{}s2\textquotesingle{},{]}\$RT\ \textless{}-\ dat{[}dat\$Subject==\textquotesingle{}s2\textquotesingle{},{]}\$Trial}
+
+\textbf{Examiner la structure d'un objet}
+
+Pour les objets à 2 dimensions \texttt{dim()} renvoie le nombre de lignes et de colonnes.
+
+On utilise \texttt{str()} pour connaître la structure d'un objet et le type de ses éléments.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{dim}\NormalTok{(mydata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str}\NormalTok{(mydata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    4 obs. of  2 variables:
+##  $ Diabetes: logi  TRUE FALSE TRUE FALSE
+##  $ Height  : num  65 69 71 73
+\end{verbatim}
+
+\hypertarget{manipulation-de-donnees-1}{%
+\section{Manipulation de données}\label{manipulation-de-donnees-1}}
+
+\textbf{Chargement de données sous R}
+
+Débutant avec \emph{R}, il peut sembler efficace de manipuler les données avec un logiciel familier tel que \emph{MS Excel}, pour corriger les erreurs, ajouter quelques informations ou faire quelques calculs simples.
+
+Pourtant, le travail sous \emph{R} est encouragé ici, pour 100\% des opérations sur les données !
+
+Quelques arguments:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{MS Excel} charge les données réelles, ce qui signifie que les modifications sont sauvegardées dans le fichier de données même. De plus, aucun historique des manipulations n'est sauvegardé, il est donc difficile, voire impossible, de conserver une trace des changements. \emph{Au contraire, R}, charge une copie des données dans sa mémoire et n'altère pas directement les données. Il permet de fonctionner avec des scripts, qui listent les manipulations appliquées aux données, les rendant ainsi \textbf{reproductibles} et \textbf{transparentes}.\\
+\item
+  Travailler directement sur les données peut produire des erreurs qui sont alors difficiles à identifier et à corriger. Avec \emph{R} il est facile de détecter les erreurs et problèmes systématiques à partir de petits programmes.\\
+\item
+  Différents formats de données peuvent être chargés avec \emph{R}, notamment les formats de logiciels spécialisés tels que SAS, Spss, Stata, etc.
+\end{itemize}
+
+\textbf{Formats de données - exemples}
+
+\textbf{Dataframe}
+Une base de données sous \emph{R} est appelée une \texttt{dataframe}, équivalent à une matrice de données où les lignes sont indéxées par leur numéro et les colonnes par des noms de variables.
+Les bases de données d'autres formats (par ex. ceux d'autres logiciels) peuvent être importées (ou chargées) sous \emph{R}.
+
+\textbf{Formats de données R}\\
+Les fichiers \texttt{.Rdata} ou \texttt{.rda} contiennent un ou plusieurs objets \texttt{R} (dataframes, fonctions, shapefiles, etc.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Chargement d'un fichier (fictif) de données dans R: }
+\KeywordTok{load}\NormalTok{(}\StringTok{'DATA}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Movie.Data.Clean.RData'}\NormalTok{)}
+\CommentTok{# utiliser ls() pour lister les objets de l'environnement}
+\KeywordTok{ls}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "a"          "abc"        "b"          "char_vec"   "mary_info" 
+##  [6] "mon_vec"    "Movie.Data" "mydata"     "mylist"     "scores"
+\end{verbatim}
+
+Les fichiers \texttt{.rds} contiennent un objet \emph{R} sans nom. Cet objet est donc stocké dans une seule variable. \texttt{readRDS(\textquotesingle{}file.rds\textquotesingle{})} permet de charger un tel fichier et \texttt{str(newdat)}de savoir quels objets sont dans l'objet chargé.
+
+\textbf{Les fichers texte}
+
+Les fichiers \texttt{.txt}ou \texttt{.csv} sont des fichiers de données brutes, sans mise en forme des données (par exemple format de date).
+
+Dans un fichier texte, une ligne correspond à une observation (une ligne du dataframe). Sur la ligne, les valeurs des différentes colonnes sont séparées par un caractère séparateur (souvent le \texttt{;} ou la tabulation).
+
+\texttt{read.table(\textquotesingle{}file.txt\textquotesingle{},\ header=TRUE)} permet de charger un fichier texte où la 1ère ligne contient les noms de variables.
+
+\emph{Problèmes classiques de lecture des fichiers textes}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \emph{R} ne trouve pas le fichier que vous voulez charger:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Vérifiez votre working directory (dossier de travail) \texttt{getwd()}. Ce dossier contient-il le fichier que vous voulez charger ? Modifiez ce dossier avec \texttt{setwd()}.\\
+\item
+  Parfois il est utile de préciser tout le chemin d'accès dans le nom du fichier à charger. Par exemple: \texttt{"C://Documents//data.txt"} sous Windows ou sous Mac \texttt{"/Users/Moi/Documents/data.txt"}.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  \texttt{Incorrect\ delimiter}. Aucun message d'erreur n'est affiché, mais les données paraissent étranges. Le séparateur de variable est mal spécifié. Excel utilise souvent la \texttt{,} alors que d'autres logiciels utilisent l'espace ou la tabulation.
+  \texttt{dat\ \textless{}-\ read.table("file.csv",\ header=TRUE,\ sep=\textquotesingle{},\textquotesingle{})}permet de préciser le séparateur.
+\item
+  \emph{Décimale}. Les données issues de locigiels anglosaxons utilisent le \texttt{.} pour indiquer les décimales, plutôt que la \texttt{,}. Cela peut être précisé avec: \texttt{dat\ \textless{}-\ read.table("file.csv",\ header=TRUE,\ sep=\textquotesingle{},\textquotesingle{},\ dec=\textquotesingle{}.\textquotesingle{})}
+\end{enumerate}
+
+Cependant, le \texttt{.} est aussi parfois utilisé pour séparer les milliers. C'est alors à l'exportation des données que l'on doit s'assurer du caractère des décimales et qu'il n'y a pas de caractère pour les milliers.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  \emph{Erreurs sur les variables}. Dans certains cas, le problème d'importation affecte une ou plusieurs variables.
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Une chaine de caractère est reconnue comme un facteur : \texttt{as.character(data\$V1)} pour convertir une variable en caractère.
+\item
+  Dans un champs de caractère, le \texttt{.} est utilisé pour les milliers, alors que la \texttt{,}marque les décimales. \texttt{gsub("\textbackslash{}\textbackslash{}.",\ "",\ data\$V1)}supprime les \texttt{.} dans le champs de valeurs.
+\item
+  La \texttt{,}marque les décimales au lieu du \texttt{.}: \texttt{gsub("\textbackslash{}\textbackslash{},",\ "\textbackslash{}\textbackslash{}.",\ data\$V1)} : remplace les \texttt{,} par un \texttt{.}
+\item
+  pour convertir une chaine de caractères en numérique: \texttt{as.numeric(data\$V1)}
+\end{itemize}
+
+Par exemple:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"file.txt"}\NormalTok{, }\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{stringsAsFactors=}\OtherTok{FALSE}\NormalTok{)}
+\NormalTok{data}\OperatorTok{$}\NormalTok{V1 <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{gsub}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{,"}\NormalTok{, }\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{."}\NormalTok{, }\KeywordTok{gsub}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{."}\NormalTok{, }\StringTok{""}\NormalTok{, data}\OperatorTok{$}\NormalTok{V1)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\item
+  les valeurs manquantes sont indiquées par \texttt{.}au lieu d'un vide: \texttt{NA}:\\
+  \texttt{read.table("file.txt",\ header=TRUE,\ na.strings=\textquotesingle{}.\textquotesingle{})} précise le codage des vides. Si deux codages existent dans le fichier des \texttt{.} et les caractères \emph{NA} :
+  \texttt{read.table("file.txt",\ header=TRUE,\ na.strings=c(\textquotesingle{}.\textquotesingle{},\ NA))}
+\item
+  \emph{Nom de colonne manquant}:\\
+  R considère qu'une colonne sans nom contient les noms de lignes.\texttt{read.table("file.csv",\ header=TRUE,\ row.names=NULL)} force la colonne sans nom à être prise comme une variable.
+\item
+  \emph{Lignes de longueur différente}:\\
+  Si des lignes ont des longueurs différentes, \emph{R} ne retrouve pas toutes les variables. Il faut le forcer par :\texttt{read.table("file.csv",\ header=TRUE,\ fill=TRUE)}
+\item
+  \emph{drop des premières lignes}:\\
+  On peut commencer la lecture du fichier au numéro de ligne souhaité: \texttt{read.table("file.csv",\ header=TRUE,\ skip=4)}: pour commencer à la ligne 5.
+\end{enumerate}
 
 \hypertarget{methods}{%
 \chapter{Methods}\label{methods}}
